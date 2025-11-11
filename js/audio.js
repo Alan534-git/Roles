@@ -4,6 +4,10 @@
     audio: null,
     slider: null,
     playBtn: null,
+    volumeToggleBtn: null,
+    volumeIconUnmuted: null,
+    volumeIconMuted: null,
+    previousVolume: 0.5, // Guardar el volumen anterior al mutear
     init(opts = {}){
       const { audioId = 'backgroundMusic', sliderId = 'volumeSlider', playBtnId = 'music-toggle-btn', unblockId, unblockBtnId, src } = opts;
       let audio = document.getElementById(audioId);
@@ -26,6 +30,9 @@
         this.audio.volume = 0.5;
       }
 
+      // Guardar volumen anterior
+      this.previousVolume = this.audio.volume;
+
       // Slider
       const slider = document.getElementById(sliderId);
       this.slider = slider;
@@ -34,11 +41,40 @@
         slider.addEventListener('input', (e) => {
           const v = parseFloat(e.target.value);
           this.audio.volume = v;
+          this.previousVolume = v; // Actualizar volumen anterior cuando el usuario ajusta manualmente
           try { sessionStorage.setItem(STORAGE_KEY, String(v)); } catch(e){}
+          this.updateVolumeIcon(); // Actualizar icono
         });
       }
 
-      // Play/Pause button
+      // Iconos de volumen
+      this.volumeIconUnmuted = document.getElementById('volume-icon-unmuted');
+      this.volumeIconMuted = document.getElementById('volume-icon-muted');
+
+      // Botón de toggle de volumen (mute/unmute)
+      const volumeToggleBtn = document.getElementById('volume-toggle-btn');
+      this.volumeToggleBtn = volumeToggleBtn;
+      if (volumeToggleBtn) {
+        volumeToggleBtn.addEventListener('click', () => {
+          if (this.audio.volume > 0) {
+            // Mutear: guardar volumen actual y establecer a 0
+            this.previousVolume = this.audio.volume;
+            this.audio.volume = 0;
+          } else {
+            // Desmutear: volver al volumen anterior
+            this.audio.volume = this.previousVolume;
+          }
+          
+          // Actualizar slider y storage
+          if (this.slider) {
+            this.slider.value = String(this.audio.volume);
+          }
+          try { sessionStorage.setItem(STORAGE_KEY, String(this.audio.volume)); } catch(e){}
+          this.updateVolumeIcon(); // Actualizar icono
+        });
+      }
+
+      // Play/Pause button (si existe, para compatibilidad hacia atrás)
       const playBtn = document.getElementById(playBtnId);
       this.playBtn = playBtn;
       if (playBtn) {
@@ -78,10 +114,22 @@
       this.audio.addEventListener('play', ()=>{ if (this.playBtn) this.playBtn.textContent = 'Pausar música'; });
       this.audio.addEventListener('pause', ()=>{ if (this.playBtn) this.playBtn.textContent = 'Reanudar música'; });
 
+      // Actualizar icono inicial
+      this.updateVolumeIcon();
+
       return this;
     },
+    updateVolumeIcon(){
+      if (this.audio.volume > 0) {
+        if (this.volumeIconUnmuted) this.volumeIconUnmuted.style.display = 'block';
+        if (this.volumeIconMuted) this.volumeIconMuted.style.display = 'none';
+      } else {
+        if (this.volumeIconUnmuted) this.volumeIconUnmuted.style.display = 'none';
+        if (this.volumeIconMuted) this.volumeIconMuted.style.display = 'block';
+      }
+    },
     toggle(){ if (!this.audio) return; if (this.audio.paused) this.audio.play().catch(()=>{}); else this.audio.pause(); },
-    setVolume(v){ if (!this.audio) return; this.audio.volume = v; try{ sessionStorage.setItem(STORAGE_KEY, String(v)); }catch(e){} },
+    setVolume(v){ if (!this.audio) return; this.audio.volume = v; this.previousVolume = v; try{ sessionStorage.setItem(STORAGE_KEY, String(v)); }catch(e){} this.updateVolumeIcon(); },
     getVolume(){ return this.audio ? this.audio.volume : 0; }
   };
 })();
