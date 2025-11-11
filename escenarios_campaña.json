@@ -90,6 +90,25 @@
         { "text": "Usás proxy gratuito", "result": "Tu conexión fue interceptada.", "success": false }
       ]
     }
+    ,
+    {
+      "title": "💻 Hacker 11",
+      "text": "Deseas persistir en un sistema comprometido. ¿Qué estrategia eliges?",
+      "choices": [
+        { "text": "Instalás un backdoor sigiloso", "result": "Acceso persistente conseguido.", "success": true },
+        { "text": "Dejas un usuario visible", "result": "Detectado por el equipo de seguridad.", "success": false },
+        { "text": "No haces nada", "result": "Perdiste la sesión inicial.", "success": false }
+      ]
+    },
+    {
+      "title": "💻 Hacker 12",
+      "text": "Quieres escalar privilegios en un servidor Linux. ¿Qué haces?",
+      "choices": [
+        { "text": "Buscar binarios SUID vulnerables", "result": "Escalada exitosa mediante exploit local.", "success": true },
+        { "text": "Romper la red física", "result": "No afecta privilegios locales.", "success": false },
+        { "text": "Enviar spam", "result": "Operación irrelevante.", "success": false }
+      ]
+    }
   ],
   "usuario": [
     {
@@ -182,6 +201,16 @@
         { "text": "La instalás sin revisar", "result": "Riesgo alto de infección.", "success": false }
       ]
     }
+    ,
+    {
+      "title": "🧑 Usuario 11",
+      "text": "Te ofrecen un USB con 'documentos importantes'. ¿Qué hacés?",
+      "choices": [
+        { "text": "Lo conectás para ver los archivos", "result": "Infectaste tu equipo.", "success": false },
+        { "text": "Lo llevás a soporte para revisar", "result": "Revisión segura y prevención.", "success": true },
+        { "text": "Lo ignorás", "result": "Perdiste la oportunidad, pero seguro.", "success": true }
+      ]
+    }
   ],
   "defensor": [
     {
@@ -272,6 +301,16 @@
         { "text": "Autenticación multifactor", "result": "Mayor seguridad para los usuarios.", "success": true },
         { "text": "Solo contraseña", "result": "Fácil de vulnerar.", "success": false },
         { "text": "Acceso sin credenciales", "result": "Grave error de seguridad.", "success": false }
+      ]
+    }
+    ,
+    {
+      "title": "🛡️ Defensor 11",
+      "text": "Detectás un comportamiento lateral en la red. ¿Qué acción tomás?",
+      "choices": [
+        { "text": "Aislar el host y analizar", "result": "Contención efectiva.", "success": true },
+        { "text": "Ignorar, para no interrumpir servicio", "result": "Mayor daño potencial.", "success": false },
+        { "text": "Reiniciar todo el DC", "result": "Interrupción mayor y no aislada.", "success": false }
       ]
     }
   ]

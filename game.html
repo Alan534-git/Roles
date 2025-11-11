@@ -13,7 +13,10 @@
   <link rel="stylesheet" href="css/game.css" /> 
 </head>
 <body>
-  <div class="container" id="game-container">
+  <div id="site-header-placeholder"></div>
+
+  <main class="page-main">
+  <div class="container" id="game-container" role="main">
     
     <!-- Sección de Juego de Campaña / Quiz de 1 Jugador -->
     <div id="campaign-game" class="game-mode-section"> <!-- Quitamos 'hidden' inicial, lo controla JS -->
@@ -24,8 +27,8 @@
       <!-- Temporizador para QUIZ DE 1 JUGADOR CONTRARRELOJ (oculto por defecto) -->
       <div id="single-timer-display" class="timer-display hidden">Tiempo: 30s</div>
 
-      <p id="progress-display" class="progress-display"></p>
-      <div id="score-display" class="score-display">Puntuación: 0</div>
+  <p id="progress-display" class="progress-display" aria-live="polite"></p>
+  <div id="score-display" class="score-display" aria-live="polite">Puntuación: 0</div>
       
       <!-- Texto del Escenario (Campaña) o Pregunta (Quiz) -->
       <p id="scenario-text" class="scenario-text">Aquí aparecerá el texto del escenario o la pregunta.</p>
@@ -37,7 +40,7 @@
       </div>
       
       <!-- Resultado/Feedback -->
-      <p id="outcome-text" class="outcome-text"></p>
+      <p id="outcome-text" class="outcome-text" aria-live="assertive"></p>
     </div>
 
 
@@ -75,7 +78,7 @@
   <!-- Control de Volumen en Esquina Inferior Derecha (Duplicado aquí para tener control en la página de juego) -->
   <!-- Esto es necesario porque game.js ahora tiene un setupGameMusic() que usa este ID. -->
   <div id="volume-control-container">
-    <button id="volume-toggle-btn" class="volume-icon-btn" aria-label="Mute/Unmute">
+    <button id="volume-toggle-btn" class="volume-icon-btn" aria-label="Silenciar/Activar sonido" aria-pressed="false" type="button">
       <svg id="volume-icon-unmuted" viewBox="0 0 24 24" width="24" height="24">
         <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.31-2.5-4.06v8.12c1.48-.75 2.5-2.29 2.5-4.06zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z" fill="currentColor"/>
       </svg>
@@ -83,13 +86,10 @@
         <path d="M16.6915026,12.4744748 L21.5427616,17.3255701 C22.1591129,17.9419214 22.1591129,18.9487233 21.5427616,19.5650746 C20.9264103,20.1814259 19.9196084,20.1814259 19.3032571,19.5650746 L14.4519981,14.7139793 L9.64591706,19.5650746 C9.02956575,20.1814259 8.02276384,20.1814259 7.40641252,19.5650746 C6.78990135,18.9487233 6.78990135,17.9419214 7.40641252,17.3255701 L12.2576715,12.4744748 L7.40641252,7.62337954 C6.78990135,7.00686836 6.78990135,6.00006645 7.40641252,5.38355528 C8.02276384,4.76704410 9.02956575,4.76704410 9.64591706,5.38355528 L14.4519981,10.2346506 L19.3032571,5.38355528 C19.9196084,4.76704410 20.9264103,4.76704410 21.5427616,5.38355528 C22.1591129,6.00006645 22.1591129,7.00686836 21.5427616,7.62337954 L16.6915026,12.4744748 Z M3,9 L3,15 L7,15 L12,20 L12,4 L7,9 L3,9 Z" fill="currentColor"/>
       </svg>
     </button>
-    <input type="range" id="volumeSliderGame" min="0" max="1" step="0.01" value="0.5" class="volume-slider-vertical">
+    <input type="range" id="volumeSliderGame" min="0" max="1" step="0.01" value="0.5" class="volume-slider-vertical" aria-label="Control de volumen">
   </div>
 
-  <!-- Barra de controles del juego: pausar música y detener partida (también con ESC) -->
-  <div class="game-control-bar" aria-hidden="false">
-    <button id="stop-game-btn" class="control-btn stop-btn">Detener partida (ESC)</button>
-  </div>
+  <!-- Barra de controles del juego: pausar música y detener partida se muestra ahora en el header -->
 
   <!-- Aviso para desbloquear audio si el navegador impide el autoplay -->
   <div id="sound-unblock-game" style="display:none; position:fixed; bottom:20px; right:20px; background:linear-gradient(135deg, #1c1c2b 0%, #2a2a3a 100%); color:#e0e0e0; padding:16px 20px; border-radius:10px; border:2px solid #00ffaa; z-index:9998; max-width:340px; box-shadow: 0 0 20px rgba(0, 255, 170, 0.3);">
@@ -99,7 +99,12 @@
     <div style="font-size:0.8em; margin-top:10px; color:#a0a0a0;">O configura el navegador para permitir autoplay.</div>
   </div>
   
-  <!-- Inclusión del script de juego -->
+  <!-- Fin del main (contenido del juego) -->
+  </main>
+  <!-- Footer placeholder (se inyecta como fragmento) -->
+  <div id="site-footer-placeholder"></div>
+  <!-- Inclusión del script de partials y juego -->
+  <script src="js/partials.js"></script>
   <script src="js/audio.js"></script>
   <script src="js/game.js"></script>
 </body>

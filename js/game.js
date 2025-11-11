@@ -236,6 +236,29 @@ function setupGameMusic() {
             try { sessionStorage.setItem('initialVolume', String(gameMusic.volume)); } catch(e){}
         });
     }
+
+    // Vincular el botón de toggle de volumen (iconos) para accesibilidad
+    const volToggle = document.getElementById('volume-toggle-btn');
+    function updateVolumeIcons() {
+        const unmuted = document.getElementById('volume-icon-unmuted');
+        const muted = document.getElementById('volume-icon-muted');
+        if (!gameMusic) return;
+        const isMuted = !!gameMusic.muted || gameMusic.volume === 0;
+        if (unmuted) unmuted.style.display = isMuted ? 'none' : 'block';
+        if (muted) muted.style.display = isMuted ? 'block' : 'none';
+        if (volToggle) volToggle.setAttribute('aria-pressed', String(isMuted));
+    }
+    if (volToggle) {
+        volToggle.addEventListener('click', () => {
+            if (!gameMusic) return;
+            gameMusic.muted = !gameMusic.muted;
+            // If unmuting and volume is 0, set a sensible default
+            if (!gameMusic.muted && gameMusic.volume === 0) gameMusic.volume = 0.5;
+            try { sessionStorage.setItem('initialVolume', String(gameMusic.volume)); } catch(e){}
+            updateVolumeIcons();
+        });
+        updateVolumeIcons();
+    }
 }
 
 /** Adjunta los controles visibles (botones) y el manejador de tecla ESC para detener la partida */
@@ -295,6 +318,7 @@ function showStopOverlay() {
             <p>Has detenido la partida. Puedes volver al menú principal o cerrar esta pantalla para reiniciar la sesión de juego.</p>
             <div class="overlay-actions">
                 <button id="overlay-return-btn" class="control-btn">Volver al menú</button>
+                <button id="overlay-restart-btn" class="control-btn">Reiniciar partida</button>
                 <button id="overlay-close-btn" class="control-btn">Cerrar</button>
             </div>
         </div>
@@ -316,6 +340,29 @@ function showStopOverlay() {
             document.addEventListener('keydown', keydownListener);
         }
     });
+
+    // Reiniciar partida desde el overlay
+    document.getElementById('overlay-restart-btn')?.addEventListener('click', () => {
+        const ov = document.getElementById('game-stop-overlay');
+        if (ov) ov.remove();
+        if (window.game) window.game.isStopped = false;
+        restartGame();
+    });
+}
+
+/** Reinicia la partida actual según la configuración guardada. */
+function restartGame() {
+    // Limpiar timers y flags
+    try { clearInterval(timerInterval); } catch(e){}
+    window.game = window.game || {};
+    window.game.isStopped = false;
+
+    // Resetear estados principales
+    currentIndex = 0; score = 0; totalDecisions = 0;
+    p1Score = 0; p2Score = 0; p1CurrentQuestionIndex = 0; p2CurrentQuestionIndex = 0;
+
+    // Re-inicializar la vista según el modo
+    initGameView(gameConfig.mode);
 }
 
 
@@ -385,7 +432,20 @@ function displaySingleQuizQuestion() {
         const button = document.createElement('button');
         button.textContent = option;
         button.className = 'choice-button';
+        button.type = 'button';
+        // Accessibility: make focusable and keyboard-selectable
+        button.setAttribute('tabindex', '0');
+        button.setAttribute('role', 'button');
+        button.setAttribute('aria-pressed', 'false');
+        // Click handler
         button.onclick = () => handleSingleQuizAnswer(option);
+        // Support keyboard activation (Enter / Space)
+        button.addEventListener('keydown', (ev) => {
+            if (ev.key === 'Enter' || ev.key === ' ') {
+                ev.preventDefault();
+                button.click();
+            }
+        });
         if (choicesDiv) choicesDiv.appendChild(button);
     });
     
@@ -474,8 +534,12 @@ function handleSingleQuizEnd() {
             <h2>🎉 Fin del Quiz</h2>
             <p class="final-score">Tu Puntuación Final es: ${score} / ${singleQuizQuestions.length}</p>
             <p>¡Gracias por participar en CiberSeguridad: El Quiz!</p>
-            <button onclick="window.location.href='index.html'" class="cta-button">Volver al Menú Principal</button>
+            <div style="display:flex; gap:10px; justify-content:center; margin-top:18px;">
+              <button id="restart-btn-single" class="cta-button">Repetir partida</button>
+              <button onclick="window.location.href='index.html'" class="cta-button">Volver al Menú Principal</button>
+            </div>
         `;
+        document.getElementById('restart-btn-single').addEventListener('click', () => restartGame());
     }
 }
 
@@ -599,8 +663,12 @@ function handleCampaignEnd() {
             <p class="final-score">Decisiones Exitosas: ${score} / ${totalDecisions}</p>
             <p class="final-score">Tasa de Éxito: ${successRate}%</p>
             <p>¡Gracias por participar!</p>
-            <button onclick="window.location.href='index.html'" class="cta-button">Volver al Menú Principal</button>
+            <div style="display:flex; gap:10px; justify-content:center; margin-top:18px;">
+              <button id="restart-btn-campaign" class="cta-button">Repetir campaña</button>
+              <button onclick="window.location.href='index.html'" class="cta-button">Volver al Menú Principal</button>
+            </div>
         `;
+        document.getElementById('restart-btn-campaign').addEventListener('click', () => restartGame());
     }
 }
 
@@ -626,7 +694,9 @@ function startMultiplayerQuiz() {
     
     // Simular el inicio de la primera ronda
     initializeMultiplayerQuestions();
-    displayMultiplayerQuestions();
+    // Renderizar preguntas independientes para cada jugador
+    renderP1Question();
+    renderP2Question();
     attachKeydownListener();
     
     if (gameConfig.isTimed) {
@@ -645,65 +715,131 @@ function initializeMultiplayerQuestions() {
 
 let p1CurrentQuestionIndex = 0;
 let p2CurrentQuestionIndex = 0;
-let p1Answered = false;
-let p2Answered = false;
-let currentMultiQuestion = null; // Pregunta que ambos están respondiendo
+// currentMultiQuestion was used in the old shared-multi implementation and is no longer needed
 
 function displayMultiplayerQuestions() {
-    // Si ya no hay preguntas para el J1, terminamos el juego (se asume simetría)
-    if (p1CurrentQuestionIndex >= p1UsedQuestions.length) {
-        handleMultiplayerQuizEnd();
-        return;
-    }
+    // Deprecated: use renderP1Question() and renderP2Question() which render each player's question independently.
+}
 
-    // Usar la misma pregunta para ambos jugadores por simplicidad del duelo
-    currentMultiQuestion = p1UsedQuestions[p1CurrentQuestionIndex];
-    
-    p1Answered = false;
-    p2Answered = false;
-    p1SelectedIndex = 0;
-    p2SelectedIndex = 0;
-
+/** Renderiza la pregunta actual para el Jugador 1. */
+function renderP1Question() {
     const qText1 = document.getElementById('p1-question');
     const choicesDiv1 = document.getElementById('p1-choices');
     const outcome1 = document.getElementById('p1-outcome');
+    const score1 = document.getElementById('p1-score');
 
+    if (p1CurrentQuestionIndex >= p1UsedQuestions.length) {
+        // Si se acabaron las preguntas para P1, comprobar fin
+        if (p2CurrentQuestionIndex >= p2UsedQuestions.length) handleMultiplayerQuizEnd();
+        return;
+    }
+
+    const q = p1UsedQuestions[p1CurrentQuestionIndex];
+    if (score1) score1.textContent = `Puntuación: ${p1Score}`;
+    if (qText1) qText1.textContent = q.pregunta;
+    if (choicesDiv1) choicesDiv1.innerHTML = '';
+    if (outcome1) outcome1.textContent = '';
+
+    q.opciones.forEach((option, index) => {
+        const btn = document.createElement('button');
+        btn.textContent = option;
+        btn.dataset.index = index;
+        btn.className = 'choice-button';
+        btn.type = 'button';
+        btn.addEventListener('click', () => handleP1Answer(index));
+        choicesDiv1.appendChild(btn);
+    });
+    p1SelectedIndex = 0;
+    highlightSelection('p1');
+}
+
+/** Renderiza la pregunta actual para el Jugador 2. */
+function renderP2Question() {
     const qText2 = document.getElementById('p2-question');
     const choicesDiv2 = document.getElementById('p2-choices');
     const outcome2 = document.getElementById('p2-outcome');
-    
-    const score1 = document.getElementById('p1-score');
     const score2 = document.getElementById('p2-score');
-    
-    if (score1) score1.textContent = `Puntuación: ${p1Score}`;
-    if (score2) score2.textContent = `Puntuación: ${p2Score}`;
 
-    if (qText1) qText1.textContent = currentMultiQuestion.pregunta;
-    if (qText2) qText2.textContent = currentMultiQuestion.pregunta;
-    
-    if (choicesDiv1) choicesDiv1.innerHTML = '';
+    if (p2CurrentQuestionIndex >= p2UsedQuestions.length) {
+        if (p1CurrentQuestionIndex >= p1UsedQuestions.length) handleMultiplayerQuizEnd();
+        return;
+    }
+
+    const q = p2UsedQuestions[p2CurrentQuestionIndex];
+    if (score2) score2.textContent = `Puntuación: ${p2Score}`;
+    if (qText2) qText2.textContent = q.pregunta;
     if (choicesDiv2) choicesDiv2.innerHTML = '';
-    if (outcome1) outcome1.textContent = '';
     if (outcome2) outcome2.textContent = '';
 
-    currentMultiQuestion.opciones.forEach((option, index) => {
-        // Jugador 1
-        const btn1 = document.createElement('button');
-        btn1.textContent = option;
-        btn1.dataset.index = index;
-        btn1.className = 'choice-button';
-        choicesDiv1.appendChild(btn1);
-
-        // Jugador 2
-        const btn2 = document.createElement('button');
-        btn2.textContent = option;
-        btn2.dataset.index = index;
-        btn2.className = 'choice-button';
-        choicesDiv2.appendChild(btn2);
+    q.opciones.forEach((option, index) => {
+        const btn = document.createElement('button');
+        btn.textContent = option;
+        btn.dataset.index = index;
+        btn.className = 'choice-button';
+        btn.type = 'button';
+        btn.addEventListener('click', () => handleP2Answer(index));
+        choicesDiv2.appendChild(btn);
     });
-    
-    highlightSelection('p1');
+    p2SelectedIndex = 0;
     highlightSelection('p2');
+}
+
+/** Maneja la respuesta del Jugador 1 (independiente). */
+function handleP1Answer(selectedIndex) {
+    if (p1CurrentQuestionIndex >= p1UsedQuestions.length) return;
+    const q = p1UsedQuestions[p1CurrentQuestionIndex];
+    const choicesDiv = document.getElementById('p1-choices');
+    const outcome = document.getElementById('p1-outcome');
+    const selectedOption = q.opciones[selectedIndex];
+    const isCorrect = selectedOption === q.respuesta_correcta;
+
+    // Disable P1 buttons
+    if (choicesDiv) {
+        Array.from(choicesDiv.children).forEach(button => {
+            button.disabled = true;
+            if (parseInt(button.dataset.index) === selectedIndex) {
+                button.classList.add(isCorrect ? 'correct-answer' : 'incorrect-answer');
+            }
+        });
+    }
+
+    if (isCorrect) { p1Score++; if (outcome) outcome.textContent = '✅ ¡Correcto!'; }
+    else { if (outcome) outcome.textContent = `❌ Incorrecto. La correcta: ${q.respuesta_correcta}`; }
+    const score1 = document.getElementById('p1-score'); if (score1) score1.textContent = `Puntuación: ${p1Score}`;
+
+    // Avanzar a la siguiente pregunta de P1
+    setTimeout(() => {
+        p1CurrentQuestionIndex++;
+        renderP1Question();
+    }, 1200);
+}
+
+/** Maneja la respuesta del Jugador 2 (independiente). */
+function handleP2Answer(selectedIndex) {
+    if (p2CurrentQuestionIndex >= p2UsedQuestions.length) return;
+    const q = p2UsedQuestions[p2CurrentQuestionIndex];
+    const choicesDiv = document.getElementById('p2-choices');
+    const outcome = document.getElementById('p2-outcome');
+    const selectedOption = q.opciones[selectedIndex];
+    const isCorrect = selectedOption === q.respuesta_correcta;
+
+    if (choicesDiv) {
+        Array.from(choicesDiv.children).forEach(button => {
+            button.disabled = true;
+            if (parseInt(button.dataset.index) === selectedIndex) {
+                button.classList.add(isCorrect ? 'correct-answer' : 'incorrect-answer');
+            }
+        });
+    }
+
+    if (isCorrect) { p2Score++; if (outcome) outcome.textContent = '✅ ¡Correcto!'; }
+    else { if (outcome) outcome.textContent = `❌ Incorrecto. La correcta: ${q.respuesta_correcta}`; }
+    const score2 = document.getElementById('p2-score'); if (score2) score2.textContent = `Puntuación: ${p2Score}`;
+
+    setTimeout(() => {
+        p2CurrentQuestionIndex++;
+        renderP2Question();
+    }, 1200);
 }
 
 /**
@@ -711,63 +847,8 @@ function displayMultiplayerQuestions() {
  * @param {string} player - 'p1' o 'p2'.
  * @param {number} selectedIndex - Índice de la opción seleccionada.
  */
-function handleMultiplayerAnswer(player, selectedIndex) {
-    if ((player === 'p1' && p1Answered) || (player === 'p2' && p2Answered)) {
-        return; // Ya respondió
-    }
-    
-    const isP1 = player === 'p1';
-    const currentQuestion = currentMultiQuestion;
-    const choicesDiv = document.getElementById(isP1 ? 'p1-choices' : 'p2-choices');
-    const outcome = document.getElementById(isP1 ? 'p1-outcome' : 'p2-outcome');
-    
-    const selectedOption = currentQuestion.opciones[selectedIndex];
-    const isCorrect = selectedOption === currentQuestion.respuesta_correcta;
-
-    // Marcar al jugador como respondido
-    if (isP1) {
-        p1Answered = true;
-    } else {
-        p2Answered = true;
-    }
-
-    // Deshabilitar todos los botones para este jugador
-    const buttons = Array.from(choicesDiv.children);
-    buttons.forEach(button => {
-        button.disabled = true;
-        // Aplicar estilo a la respuesta seleccionada
-        if (parseInt(button.dataset.index) === selectedIndex) {
-            button.classList.add(isCorrect ? 'correct-answer' : 'incorrect-answer');
-        } else if (parseInt(button.dataset.index) === currentQuestion.opciones.indexOf(currentQuestion.respuesta_correcta)) {
-             // Mostrar respuesta correcta en los demás (opcional, por claridad)
-             button.classList.add('correct-answer-hint');
-        }
-    });
-
-    // Actualizar puntuación y mensaje de resultado
-    if (isCorrect) {
-        if (isP1) p1Score++;
-        else p2Score++;
-        if (outcome) outcome.textContent = '✅ ¡Correcto!';
-    } else {
-        if (outcome) outcome.textContent = '❌ Incorrecto.';
-    }
-    
-    const score1 = document.getElementById('p1-score');
-    const score2 = document.getElementById('p2-score');
-    
-    if (score1) score1.textContent = `Puntuación: ${p1Score}`;
-    if (score2) score2.textContent = `Puntuación: ${p2Score}`;
-
-    // Si ambos han respondido, pasar a la siguiente pregunta
-    if (p1Answered && p2Answered) {
-        setTimeout(() => {
-            p1CurrentQuestionIndex++;
-            p2CurrentQuestionIndex++;
-            displayMultiplayerQuestions();
-        }, 2000);
-    }
-}
+// Deprecated: handleMultiplayerAnswer replaced by independent handlers handleP1Answer/handleP2Answer
+// Deprecated: handleMultiplayerAnswer replaced by independent handlers handleP1Answer/handleP2Answer
 
 /**
  * Adjunta el listener de teclado para el modo multijugador.
@@ -788,49 +869,53 @@ function attachKeydownListener() {
  * @param {KeyboardEvent} event - Evento de teclado.
  */
 function handleKeydown(event) {
-    if (gameConfig.mode !== 'multiplayer_quiz' || (p1Answered && p2Answered)) {
-        return; // Solo activo en multi quiz, y no si ambos ya respondieron
+    if (gameConfig.mode !== 'multiplayer_quiz') {
+        return; // Solo activo en multi quiz
     }
     
-    const totalOptions = currentMultiQuestion ? currentMultiQuestion.opciones.length : 0;
-    
+    // Para cada jugador calculamos sus opciones actuales por separado
+    const p1Q = p1UsedQuestions[p1CurrentQuestionIndex];
+    const p2Q = p2UsedQuestions[p2CurrentQuestionIndex];
+    const p1Options = p1Q ? p1Q.opciones.length : 0;
+    const p2Options = p2Q ? p2Q.opciones.length : 0;
+
     switch (event.code) {
         // --- Jugador 1 (W, S, ESPACIO) ---
         case 'KeyW': // Arriba
-            if (!p1Answered) {
-                p1SelectedIndex = (p1SelectedIndex - 1 + totalOptions) % totalOptions;
+            if (p1Options > 0) {
+                p1SelectedIndex = (p1SelectedIndex - 1 + p1Options) % p1Options;
                 highlightSelection('p1');
             }
             break;
         case 'KeyS': // Abajo
-            if (!p1Answered) {
-                p1SelectedIndex = (p1SelectedIndex + 1) % totalOptions;
+            if (p1Options > 0) {
+                p1SelectedIndex = (p1SelectedIndex + 1) % p1Options;
                 highlightSelection('p1');
             }
             break;
         case 'Space': // Seleccionar (Prevenir scroll de página)
             event.preventDefault(); 
-            if (!p1Answered) {
-                handleMultiplayerAnswer('p1', p1SelectedIndex);
+            if (p1Options > 0) {
+                handleP1Answer(p1SelectedIndex);
             }
             break;
 
         // --- Jugador 2 (FLECHAS, ENTER) ---
         case 'ArrowUp': // Arriba
-            if (!p2Answered) {
-                p2SelectedIndex = (p2SelectedIndex - 1 + totalOptions) % totalOptions;
+            if (p2Options > 0) {
+                p2SelectedIndex = (p2SelectedIndex - 1 + p2Options) % p2Options;
                 highlightSelection('p2');
             }
             break;
         case 'ArrowDown': // Abajo
-            if (!p2Answered) {
-                p2SelectedIndex = (p2SelectedIndex + 1) % totalOptions;
+            if (p2Options > 0) {
+                p2SelectedIndex = (p2SelectedIndex + 1) % p2Options;
                 highlightSelection('p2');
             }
             break;
         case 'Enter': // Seleccionar
-            if (!p2Answered) {
-                handleMultiplayerAnswer('p2', p2SelectedIndex);
+            if (p2Options > 0) {
+                handleP2Answer(p2SelectedIndex);
             }
             break;
     }
@@ -880,8 +965,12 @@ function handleMultiplayerQuizEnd() {
             <h2>Fin del Duelo</h2>
             <p class="final-score">${resultMessage}</p>
             <p>Jugador 1: ${p1Score} puntos | Jugador 2: ${p2Score} puntos</p>
-            <button onclick="window.location.href='index.html'" class="cta-button">Volver al Menú Principal</button>
+            <div style="display:flex; gap:10px; justify-content:center; margin-top:18px;">
+              <button id="restart-btn-multi" class="cta-button">Repetir duelo</button>
+              <button onclick="window.location.href='index.html'" class="cta-button">Volver al Menú Principal</button>
+            </div>
         `;
+        document.getElementById('restart-btn-multi')?.addEventListener('click', () => restartGame());
     }
 }
 
@@ -927,7 +1016,9 @@ function startTimer(duration, onTimeout) {
 // --- EXPOSICIÓN GLOBAL (Si el HTML llama a funciones directamente) ---
 window.game.handleSingleQuizAnswer = handleSingleQuizAnswer;
 window.game.handleCampaignChoice = handleCampaignChoice;
-window.game.handleMultiplayerAnswer = handleMultiplayerAnswer;
+window.game.handleP1Answer = handleP1Answer;
+window.game.handleP2Answer = handleP2Answer;
+window.game.restartGame = restartGame;
 
 // La lógica de Campaña (Role Play)
 // Las funciones displayScenario, handleCampaignChoice, nextScenario están ahora dentro de la lógica de Campaign.

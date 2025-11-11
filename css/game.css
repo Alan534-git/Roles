@@ -26,6 +26,9 @@
   z-index: 9999;
 }
 
+/* Ocultar la barra flotante antigua para evitar solapamientos: el control de pausa se ubicará en el header */
+.game-control-bar { display: none !important; }
+
 .control-btn {
   background: rgba(30,30,40,0.95);
   color: #e6f9f2;
@@ -303,4 +306,127 @@
   .player-screen {
     flex: 1 1 100%; 
   }
+}
+
+/* Header del juego */
+.site-header {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  background: linear-gradient(90deg,#0f1724 0%, #11121b 100%);
+  border-bottom: 1px solid rgba(0,255,255,0.06);
+  padding: 10px 18px;
+  z-index: 9998;
+}
+.site-header .header-inner { display:flex; align-items:center; justify-content:space-between; max-width:1100px; margin:0 auto; }
+.logo-link { color:#00ffaa; font-weight:800; text-decoration:none; font-size:1.05rem; }
+.header-actions { display:flex; gap:8px; }
+
+/* Utility: visually hidden for headings accessible only to screen readers */
+.visually-hidden, .sr-only { position:absolute !important; height:1px; width:1px; overflow:hidden; clip:rect(1px,1px,1px,1px); white-space:nowrap; }
+
+/* Ajuste del main para evitar solaparse con header fijo */
+.page-main { padding-top:72px; display:flex; justify-content:center; }
+
+/* Mejora de enfoque para accesibilidad */
+.choice-button:focus, .choices-multi button:focus, .control-btn:focus, #volume-toggle-btn:focus {
+  outline: 3px solid rgba(0,255,170,0.55);
+  outline-offset: 2px;
+  box-shadow: 0 0 12px rgba(0,255,170,0.12);
+}
+
+/* Ajustes para el control de volumen (unificados con index.css) */
+#volume-control-container {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+  background: rgba(28, 28, 43, 0.95);
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid #00ffaa55;
+  box-shadow: 0 0 15px rgba(0, 255, 170, 0.25);
+  backdrop-filter: blur(4px);
+}
+
+.volume-icon-btn {
+  width: 32px;
+  height: 32px;
+  background: #00ffaa;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #1c1c2b;
+  transition: all 0.2s ease;
+  padding: 0;
+  flex-shrink: 0;
+}
+
+.volume-icon-btn:hover {
+  background: #00ff88;
+  transform: scale(1.08);
+  box-shadow: 0 0 12px rgba(0, 255, 170, 0.5);
+}
+
+.volume-icon-btn:active {
+  transform: scale(0.96);
+  box-shadow: 0 0 6px rgba(0, 255, 170, 0.3);
+}
+
+.volume-slider-vertical {
+  width: 8px;
+  height: 120px;
+  background: linear-gradient(to top, #00ffaa44, #3a4a5a);
+  border-radius: 4px;
+  -webkit-appearance: none; /* avoid non-standard slider-vertical keyword */
+  appearance: none;
+  /* Use writing-mode + direction for vertical sliders (modern approach) */
+  writing-mode: vertical-lr;
+  direction: rtl;
+  cursor: pointer;
+  outline: none;
+}
+
+.volume-slider-vertical::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #00ffff;
+  cursor: pointer;
+  box-shadow: 0 0 8px #00ffff, 0 0 16px rgba(0, 255, 255, 0.4);
+  border: 2px solid #1c1c2b;
+  transition: all 0.1s ease;
+}
+
+@media (max-width:600px) {
+  .volume-slider-vertical { height: 90px; }
+  .game-control-bar { top: auto; bottom: 16px; right: 12px; }
+}
+
+/* Volume widget (compact + expand) */
+.volume-widget { align-items: center; gap: 6px; }
+.volume-widget .volume-icon-btn { background: rgba(20,20,30,0.9); border-radius: 8px; padding: 6px; display:flex; align-items:center; justify-content:center; }
+.volume-panel { background: linear-gradient(180deg,#12121a, #1e2230); padding:8px; border-radius:8px; border:1px solid rgba(0,255,170,0.08); box-shadow: 0 6px 18px rgba(0,0,0,0.6); margin-left:6px; }
+.volume-panel input[type="range"] { -webkit-appearance: none; appearance: none; width:140px; height:6px; border-radius:6px; background:linear-gradient(90deg,#00ffaa,#00aaff); }
+.volume-panel input[type="range"]::-webkit-slider-thumb { -webkit-appearance:none; width:18px; height:18px; border-radius:50%; background:#fff; box-shadow:0 2px 6px rgba(0,0,0,0.4); }
+.volume-panel input[type="range"]:focus { outline: none; box-shadow: 0 0 12px rgba(0,255,170,0.18); }
+
+/* Footer styles */
+.site-footer { margin-top: 28px; padding: 18px 0; text-align: center; color:#9fd; border-top: 1px solid rgba(0,255,170,0.04); }
+.site-footer .footer-inner { max-width:1100px; margin:0 auto; display:flex; justify-content:space-between; align-items:center; gap:12px; padding: 0 18px; }
+.site-footer { position: relative; width: 100%; }
+.site-footer a { color:#9fd; text-decoration:none; }
+.site-footer small { color:#a9d; }
+
+@media (max-width:700px) {
+  .site-footer .footer-inner { flex-direction:column; gap:6px; }
 }

@@ -249,4 +249,145 @@
     ],
     "respuesta_correcta": "Algo que deseas (tu intención de iniciar sesión)."
   }
+,
+  {
+    "pregunta": "¿Qué es Cross-Site Scripting (XSS)?",
+    "opciones": [
+      "Un ataque que inyecta scripts maliciosos en páginas web vistas por otros usuarios.",
+      "Una técnica para encriptar datos en tránsito.",
+      "Un tipo de firewall de aplicaciones.",
+      "Una herramienta de análisis forense digital."
+    ],
+    "respuesta_correcta": "Un ataque que inyecta scripts maliciosos en páginas web vistas por otros usuarios."
+  },
+  {
+    "pregunta": "¿Qué es CSRF (Cross-Site Request Forgery)?",
+    "opciones": [
+      "Un ataque que obliga a un usuario autenticado a ejecutar acciones no deseadas en una aplicación web.",
+      "Un tipo de encriptación para formularios web.",
+      "Un método de autenticación fuerte.",
+      "Un parche de seguridad para servidores web."
+    ],
+    "respuesta_correcta": "Un ataque que obliga a un usuario autenticado a ejecutar acciones no deseadas en una aplicación web."
+  },
+  {
+    "pregunta": "¿Qué práctica ayuda a mitigar XSS?",
+    "opciones": [
+      "Validar y sanear la entrada de usuario antes de mostrarla.",
+      "Aumentar la velocidad del servidor.",
+      "Usar contraseñas cortas para usuarios.",
+      "Deshabilitar los logs del servidor."
+    ],
+    "respuesta_correcta": "Validar y sanear la entrada de usuario antes de mostrarla."
+  },
+  {
+    "pregunta": "¿Qué es 'principio de menor privilegio'?",
+    "opciones": [
+      "Dar a los usuarios sólo los permisos necesarios para realizar su trabajo.",
+      "Permitir que todos los usuarios sean administradores.",
+      "Compartir contraseñas entre equipos para facilidad.",
+      "Usar la misma cuenta para múltiples servicios."
+    ],
+    "respuesta_correcta": "Dar a los usuarios sólo los permisos necesarios para realizar su trabajo."
+  },
+  {
+    "pregunta": "¿Qué mide un escáner de vulnerabilidades?",
+    "opciones": [
+      "La presencia de vulnerabilidades conocidas en sistemas y aplicaciones.",
+      "La velocidad de la conexión a internet.",
+      "La calidad de las contraseñas por su longitud.",
+      "La temperatura del CPU del servidor."
+    ],
+    "respuesta_correcta": "La presencia de vulnerabilidades conocidas en sistemas y aplicaciones."
+  },
+  {
+    "pregunta": "¿Qué es 'hardening' de un sistema?",
+    "opciones": [
+      "Reducir la superficie de ataque del sistema (deshabilitar servicios innecesarios, aplicar parches).",
+      "Aumentar la memoria RAM del equipo.",
+      "Instalar más software de terceros.",
+      "Permitir acceso remoto sin autenticación."
+    ],
+    "respuesta_correcta": "Reducir la superficie de ataque del sistema (deshabilitar servicios innecesarios, aplicar parches)."
+  },
+  {
+    "pregunta": "¿Qué es la 'cadena de suministro' en seguridad?",
+    "opciones": [
+      "Los componentes, software y servicios que se entregan desde proveedores y pueden introducir riesgos.",
+      "La forma de empaquetar hardware para envío.",
+  "La red interna de una empresa.",
+  "Un backup en la nube."
+    ],
+    "respuesta_correcta": "Los componentes, software y servicios que se entregan desde proveedores y pueden introducir riesgos."
+  },
+  {
+    "pregunta": "¿Cuál es una buena práctica frente a 'spear phishing'?",
+    "opciones": [
+      "Formación específica para identificar mensajes dirigidos y verificación de remitentes.",
+      "Abrir todo correo para comprobar su contenido.",
+      "Compartir credenciales por teléfono.",
+      "Usar la misma contraseña en todos los sitios."
+    ],
+    "respuesta_correcta": "Formación específica para identificar mensajes dirigidos y verificación de remitentes."
+  },
+  {
+    "pregunta": "¿Qué herramienta se usa para monitorizar eventos y detectar incidentes (SIEM)?",
+    "opciones": [
+      "SIEM (Security Information and Event Management) recopila y correlaciona logs para detectar amenazas.",
+      "Un antivirus de consumo.",
+      "Un editor de texto para logs.",
+      "Un gestor de contraseñas."
+    ],
+    "respuesta_correcta": "SIEM (Security Information and Event Management) recopila y correlaciona logs para detectar amenazas."
+  },
+  {
+    "pregunta": "¿Qué es el 'pharming'?",
+    "opciones": [
+      "Redirigir tráfico a un sitio falso mediante manipulación de DNS o hosts.",
+      "Pescar en internet.",
+      "Un tipo de firewall.",
+      "Una técnica de backup."
+    ],
+    "respuesta_correcta": "Redirigir tráfico a un sitio falso mediante manipulación de DNS o hosts."
+  },
+  {
+    "pregunta": "¿Qué técnica permite proteger contra sniffers en redes inalámbricas?",
+    "opciones": [
+      "Usar WPA2/WPA3 y cifrado fuerte en las redes Wi-Fi.",
+      "Hacer la red más lenta.",
+      "Usar sólo contraseñas numéricas.",
+      "Apagar el router cuando no se usa."
+    ],
+    "respuesta_correcta": "Usar WPA2/WPA3 y cifrado fuerte en las redes Wi-Fi."
+  },
+  {
+    "pregunta": "¿Qué es 'SOC' en ciberseguridad?",
+    "opciones": [
+      "Security Operations Center, centro que monitoriza y responde a incidentes.",
+      "Un tipo de encriptación.",
+      "Un software de copia de seguridad.",
+      "Un protocolo de red obsoleto."
+    ],
+    "respuesta_correcta": "Security Operations Center, centro que monitoriza y responde a incidentes."
+  },
+  {
+    "pregunta": "¿Qué significa 'pentesting'?",
+    "opciones": [
+      "Pruebas de penetración para evaluar la seguridad mediante ataques controlados.",
+      "Instalar pantallas de protección.",
+      "Una técnica de backup rápido.",
+      "Eliminar vulnerabilidades automáticamente."
+    ],
+    "respuesta_correcta": "Pruebas de penetración para evaluar la seguridad mediante ataques controlados."
+  },
+  {
+    "pregunta": "¿Qué es el 'hashing' de contraseñas?",
+    "opciones": [
+      "Transformar contraseñas en valores fijos no reversibles para protegerlas.",
+      "Encriptar contraseñas con una clave pública.",
+      "Almacenar contraseñas en texto plano.",
+      "Compartir contraseñas entre servidores."
+    ],
+    "respuesta_correcta": "Transformar contraseñas en valores fijos no reversibles para protegerlas."
+  }
 ]
