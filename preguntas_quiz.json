@@ -1,0 +1,252 @@
+[
+  {
+    "pregunta": "¿Qué es un ataque de 'phishing'?",
+    "opciones": [
+      "Un intento de obtener información sensible (usuarios, contraseñas) suplantando una identidad.",
+      "Un tipo de virus que se propaga por la red local.",
+      "Un ataque que bloquea el acceso a un servidor web.",
+      "Un método para pescar en internet."
+    ],
+    "respuesta_correcta": "Un intento de obtener información sensible (usuarios, contraseñas) suplantando una identidad."
+  },
+  {
+    "pregunta": "¿Cuál es el propósito principal de un 'firewall'?",
+    "opciones": [
+      "Acelerar la conexión a internet.",
+      "Monitorear y filtrar el tráfico de red entrante y saliente.",
+      "Eliminar virus y malware de una computadora.",
+      "Crear copias de seguridad de los archivos."
+    ],
+    "respuesta_correcta": "Monitorear y filtrar el tráfico de red entrante y saliente."
+  },
+  {
+    "pregunta": "¿Qué significa 'MFA' en ciberseguridad?",
+    "opciones": [
+      "Multi-Factor Authentication (Autenticación de Múltiples Factores).",
+      "Malware Frequency Analysis (Análisis de Frecuencia de Malware).",
+      "My First Attack (Mi Primer Ataque).",
+      "Manual File Access (Acceso Manual a Archivos)."
+    ],
+    "respuesta_correcta": "Multi-Factor Authentication (Autenticación de Múltiples Factores)."
+  },
+  {
+    "pregunta": "Un 'keylogger' es un software diseñado para...",
+    "opciones": [
+      "Generar contraseñas seguras.",
+      "Bloquear teclas específicas del teclado.",
+      "Registrar las pulsaciones de teclas sin el conocimiento del usuario.",
+      "Encriptar el disco duro."
+    ],
+    "respuesta_correcta": "Registrar las pulsaciones de teclas sin el conocimiento del usuario."
+  },
+  {
+    "pregunta": "¿Qué es un ataque 'DDoS'?",
+    "opciones": [
+      "Un ataque que borra datos del disco (Disk Data Overwrite Service).",
+      "Un ataque que intenta adivinar una contraseña por fuerza bruta.",
+      "Un ataque que inunda un servidor con tráfico desde múltiples fuentes para dejarlo inaccesible.",
+      "Un tipo de software de encriptación."
+    ],
+    "respuesta_correcta": "Un ataque que inunda un servidor con tráfico desde múltiples fuentes para dejarlo inaccesible."
+  },
+  {
+    "pregunta": "¿Cuál de las siguientes es la mejor práctica para crear una contraseña segura?",
+    "opciones": [
+      "Usar una palabra común seguida de '123'.",
+      "Usar tu fecha de nacimiento.",
+      "Una frase larga y única que combine mayúsculas, minúsculas, números y símbolos.",
+      "El nombre de tu mascota."
+    ],
+    "respuesta_correcta": "Una frase larga y única que combine mayúsculas, minúsculas, números y símbolos."
+  },
+  {
+    "pregunta": "¿Qué es 'ransomware'?",
+    "opciones": [
+      "Un software que secuestra los archivos del usuario y pide un rescate para liberarlos.",
+      "Un antivirus gratuito.",
+      "Un programa para optimizar el rendimiento del sistema.",
+      "Un tipo de hardware de red."
+    ],
+    "respuesta_correcta": "Un software que secuestra los archivos del usuario y pide un rescate para liberarlos."
+  },
+  {
+    "pregunta": "¿Para qué se utiliza una 'VPN' (Red Privada Virtual)?",
+    "opciones": [
+      "Para aumentar la velocidad de descarga.",
+      "Para crear una conexión segura y encriptada a otra red a través de internet.",
+      "Para diseñar páginas web.",
+      "Para jugar videojuegos en línea."
+    ],
+    "respuesta_correcta": "Para crear una conexión segura y encriptada a otra red a través de internet."
+  },
+  {
+    "pregunta": "La 'ingeniería social' en ciberseguridad se refiere a:",
+    "opciones": [
+      "El diseño de software social.",
+      "La manipulación psicológica de las personas para que revelen información confidencial.",
+      "Una reunión de hackers.",
+      "Programar aplicaciones para redes sociales."
+    ],
+    "respuesta_correcta": "La manipulación psicológica de las personas para que revelen información confidencial."
+  },
+  {
+    "pregunta": "¿Qué es una vulnerabilidad de 'Inyección SQL'?",
+    "opciones": [
+      "Inyectar un virus a través de un correo.",
+      "Insertar código malicioso en una consulta de base de datos para manipularla.",
+      "Un problema de hardware en el servidor.",
+      "Una falla en el sistema de refrigeración del CPU."
+    ],
+    "respuesta_correcta": "Insertar código malicioso en una consulta de base de datos para manipularla."
+  },
+  {
+    "pregunta": "¿Qué es un 'parche' de seguridad?",
+    "opciones": [
+      "Un tipo de cable de red.",
+      "Una actualización de software diseñada para corregir una vulnerabilidad de seguridad.",
+      "Un dispositivo físico que bloquea puertos USB.",
+      "Un sinónimo de 'firewall'."
+    ],
+    "respuesta_correcta": "Una actualización de software diseñada para corregir una vulnerabilidad de seguridad."
+  },
+  {
+    "pregunta": "Usar Wi-Fi público sin protección es arriesgado porque...",
+    "opciones": [
+      "Puede dañar la batería de tu dispositivo.",
+      "Suele ser muy lento.",
+      "Los atacantes en la misma red pueden interceptar tu tráfico (ataque 'Man-in-the-Middle').",
+      "Consume más datos móviles."
+    ],
+    "respuesta_correcta": "Los atacantes en la misma red pueden interceptar tu tráfico (ataque 'Man-in-the-Middle')."
+  },
+  {
+    "pregunta": "¿Qué es el 'spyware'?",
+    "opciones": [
+      "Un software que se instala secretamente para recopilar información sobre el usuario.",
+      "Un tipo de gafas de realidad virtual.",
+      "Un accesorio para cámaras de seguridad.",
+      "Un programa para escribir código."
+    ],
+    "respuesta_correcta": "Un software que se instala secretamente para recopilar información sobre el usuario."
+  },
+  {
+    "pregunta": "¿Qué es un 'botnet'?",
+    "opciones": [
+      "Una red de robots de limpieza.",
+      "Un programa de chat automatizado.",
+      "Una red de computadoras infectadas (zombis) controladas por un atacante.",
+      "El departamento de robótica de una empresa."
+    ],
+    "respuesta_correcta": "Una red de computadoras infectadas (zombis) controladas por un atacante."
+  },
+  {
+    "pregunta": "La 'autenticación de dos factores' (2FA) requiere...",
+    "opciones": [
+      "Dos contraseñas diferentes.",
+      "Dos personas para iniciar sesión.",
+      "Dos piezas de evidencia (factores) para verificar la identidad (ej. contraseña + código del móvil).",
+      "El doble de tiempo para iniciar sesión."
+    ],
+    "respuesta_correcta": "Dos piezas de evidencia (factores) para verificar la identidad (ej. contraseña + código del móvil)."
+  },
+  {
+    "pregunta": "¿Qué es un 'troyano' en informática?",
+    "opciones": [
+      "Un virus que se origina en Grecia.",
+      "Un programa malicioso que se disfraza de software legítimo.",
+      "Un sistema de defensa de red.",
+      "Un tipo de encriptación."
+    ],
+    "respuesta_correcta": "Un programa malicioso que se disfraza de software legítimo."
+  },
+  {
+    "pregunta": "¿Cuál es el objetivo de un 'exploit'?",
+    "opciones": [
+      "Explotar los recursos del sistema para minar criptomonedas.",
+      "Un código diseñado para aprovechar una vulnerabilidad específica en un software.",
+      "Un informe detallado de un ataque.",
+      "Un sinónimo de 'hacker'."
+    ],
+    "respuesta_correcta": "Un código diseñado para aprovechar una vulnerabilidad específica en un software."
+  },
+  {
+    "pregunta": "¿Qué es la 'criptografía'?",
+    "opciones": [
+      "El estudio de las criptomonedas.",
+      "El arte de escribir en código secreto (cifrar y descifrar información).",
+      "El diseño de tumbas antiguas.",
+      "Un tipo de malware."
+    ],
+    "respuesta_correcta": "El arte de escribir en código secreto (cifrar y descifrar información)."
+  },
+  {
+    "pregunta": "¿Qué hace un 'antivirus'?",
+    "opciones": [
+      "Previene que tu computadora se caliente.",
+      "Detecta, previene y elimina software malicioso (malware).",
+      "Limpia archivos basura del disco duro.",
+      "Actualiza los drivers del sistema."
+    ],
+    "respuesta_correcta": "Detecta, previene y elimina software malicioso (malware)."
+  },
+  {
+    "pregunta": "Un 'ataque de fuerza bruta' se usa para...",
+    "opciones": [
+      "Romper físicamente un servidor.",
+      "Adivinar contraseñas probando sistemáticamente todas las combinaciones posibles.",
+      "Desconectar un cable de red por la fuerza.",
+      "Sobrecargar la fuente de poder."
+    ],
+    "respuesta_correcta": "Adivinar contraseñas probando sistemáticamente todas las combinaciones posibles."
+  },
+  {
+    "pregunta": "¿Qué es una 'vulnerabilidad de día cero' (Zero-Day)?",
+    "opciones": [
+      "Una vulnerabilidad que se descubre el primer día del año.",
+      "Una falla de seguridad que es desconocida para el fabricante y para la cual no existe parche.",
+      "Un virus que se activa a medianoche.",
+      "Un descuento en software de seguridad."
+    ],
+    "respuesta_correcta": "Una falla de seguridad que es desconocida para el fabricante y para la cual no existe parche."
+  },
+  {
+    "pregunta": "¿Qué es 'HTTPS'?",
+    "opciones": [
+      "Un protocolo de transferencia de archivos pesados.",
+      "La versión segura de HTTP, que cifra la comunicación entre tu navegador y el sitio web.",
+      "Un nuevo tipo de lenguaje de programación.",
+      "Un servicio de streaming de alta definición."
+    ],
+    "respuesta_correcta": "La versión segura de HTTP, que cifra la comunicación entre tu navegador y el sitio web."
+  },
+  {
+    "pregunta": "¿Qué es un 'gusano' (worm) informático?",
+    "opciones": [
+      "Un malware que se replica a sí mismo para propagarse a otras computadoras, a menudo usando una red.",
+      "Un cable defectuoso.",
+      "Un usuario que se mueve lentamente por la red.",
+      "Un programa de limpieza de disco."
+    ],
+    "respuesta_correcta": "Un malware que se replica a sí mismo para propagarse a otras computadoras, a menudo usando una red."
+  },
+  {
+    "pregunta": "¿Qué es 'BYOD' (Bring Your Own Device)?",
+    "opciones": [
+      "Una política que permite a los empleados usar sus dispositivos personales para el trabajo.",
+      "Un tipo de ataque de denegación de servicio.",
+      "Una marca de computadoras.",
+      "Un protocolo de seguridad de red."
+    ],
+    "respuesta_correcta": "Una política que permite a los empleados usar sus dispositivos personales para el trabajo."
+  },
+  {
+    "pregunta": "¿Cuál de estos NO es un 'factor' de autenticación?",
+    "opciones": [
+      "Algo que sabes (una contraseña).",
+      "Algo que tienes (un token o móvil).",
+      "Algo que eres (tu huella digital).",
+      "Algo que deseas (tu intención de iniciar sesión)."
+    ],
+    "respuesta_correcta": "Algo que deseas (tu intención de iniciar sesión)."
+  }
+]

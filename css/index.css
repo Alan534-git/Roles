@@ -1,0 +1,212 @@
+/* Tema Oscuro "Cyber" (Base y Menú) */
+body {
+  font-family: 'Inter', sans-serif; /* Usamos Inter como estándar */
+  background: #12121e; /* Fondo oscuro */
+  color: #e0e0e0; /* Texto claro */
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center; /* Centrar verticalmente en la página de inicio */
+  min-height: 100vh;
+  padding: 20px;
+}
+
+/* Contenedor principal con efecto de neón */
+.container {
+  width: 90%;
+  max-width: 500px; /* Tamaño más ajustado para menú */
+  background: #1c1c2b;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.2), 0 0 5px rgba(0, 0, 0, 0.8); /* Sombra estilo neón */
+  border: 1px solid #00ffff55;
+  transition: all 0.3s ease;
+}
+
+h1, h2 {
+  text-align: center;
+  color: #00ffff; /* Color de acento neón */
+  text-shadow: 0 0 5px #00ffff;
+  margin-bottom: 20px;
+}
+
+.subtitle {
+    text-align: center;
+    color: #00ffaa;
+    margin-bottom: 30px;
+}
+
+/* Estilos de Botones Generales */
+button {
+  background: #3a4a5a;
+  color: #e0e0e0;
+  border: none;
+  padding: 12px 20px;
+  margin: 10px 0;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1em;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 0 #2e3a46;
+  width: 100%;
+  font-weight: bold;
+}
+
+button:hover:enabled {
+  background: #4a5a6a;
+  box-shadow: 0 4px 0 #3e4c5a;
+}
+
+button:active:enabled {
+  transform: translateY(2px);
+  box-shadow: 0 2px 0 #2e3a46;
+}
+
+button:disabled {
+  background: #2a2a3a;
+  color: #666;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* Estilos de Configuración Específicos */
+.setup-section h2 {
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+
+/* Estilos para la selección de modo de juego */
+.mode-section {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    flex-wrap: wrap; /* Para responsive en móvil */
+}
+
+.mode-section h3 {
+    width: 100%;
+    margin: 0 0 10px 0;
+    color: #00ffaa;
+}
+
+.mode-select-btn {
+    flex-grow: 1;
+    min-width: 120px;
+    padding: 10px 15px;
+    background: #333;
+    box-shadow: 0 4px 0 #222;
+    margin: 0; /* Anular margin general */
+}
+
+.mode-select-btn.selected {
+    background: #00ffff;
+    color: #1c1c2b;
+    box-shadow: 0 4px 0 #00aaaa;
+    transform: scale(1.05);
+}
+
+.mode-select-btn:hover:enabled {
+    background: #00cccc;
+    color: #1c1c2b;
+}
+
+/* Checkbox y Contrarreloj */
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 15px;
+    margin-bottom: 20px;
+    font-weight: bold;
+    color: #e0e0e0;
+}
+
+.checkbox-label input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    accent-color: #00ffaa;
+}
+
+/* Roles en Campaña */
+#campaign-role-select {
+    margin-top: 15px;
+}
+#campaign-role-select label {
+    display: block;
+    margin-bottom: 10px;
+    color: #00ffaa;
+    font-weight: bold;
+}
+#campaign-role-select button {
+    width: 48%;
+    display: inline-block;
+}
+
+/* Botón de Confirmación */
+#confirmStartButton {
+    background: #00ffaa;
+    color: #1c1c2b;
+    box-shadow: 0 6px 0 #009966;
+    margin-top: 30px;
+}
+#confirmStartButton:hover {
+    background: #00cc88;
+}
+
+
+/* --- Control de Volumen (Inferior Derecha) --- */
+#volume-control-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    background: #1c1c2b;
+    padding: 10px 15px;
+    border-radius: 8px;
+    border: 1px solid #00ffaa55;
+    box-shadow: 0 0 10px rgba(0, 255, 170, 0.2);
+}
+
+#volume-control-container label {
+    font-size: 0.9em;
+    color: #00ffaa;
+    margin-bottom: 5px;
+}
+
+#volumeSlider {
+    width: 100px;
+    height: 8px;
+    background: #3a4a5a;
+    border-radius: 4px;
+    -webkit-appearance: none;
+    appearance: none;
+    cursor: pointer;
+}
+
+#volumeSlider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #00ffff;
+    cursor: pointer;
+    box-shadow: 0 0 5px #00ffff;
+}
+
+#volumeSlider::-moz-range-thumb {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #00ffff;
+    cursor: pointer;
+    border: none;
+    box-shadow: 0 0 5px #00ffff;
+}

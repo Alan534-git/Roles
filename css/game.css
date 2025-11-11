@@ -1,0 +1,306 @@
+/* Estilos Base para Game.html (Importados en Index.html) */
+/* Los estilos de body, h1, h2, button, .hidden, etc., deben estar en index.css */
+
+/* Reestablecer el contenedor para la vista de juego (más ancho) */
+.container {
+  width: 90%;
+  max-width: 1000px; 
+  background: #1c1c2b;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.2), 0 0 5px rgba(0, 0, 0, 0.8);
+  border: 1px solid #00ffff55;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+/* Barra de controles (pausar música / detener partida) */
+.game-control-bar {
+  position: fixed;
+  right: 18px;
+  top: 18px;
+  display: flex;
+  gap: 10px;
+  z-index: 9999;
+}
+
+.control-btn {
+  background: rgba(30,30,40,0.95);
+  color: #e6f9f2;
+  border: 1px solid #00ffaa66;
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 700;
+  box-shadow: 0 4px 0 rgba(0,0,0,0.4);
+}
+.control-btn:hover { transform: translateY(-1px); }
+.control-btn:active { transform: translateY(1px); box-shadow: 0 2px 0 rgba(0,0,0,0.4); }
+.control-btn.stop-btn { background: #bb2b2b; border-color: #ffaaaa66; }
+
+/* Overlay que aparece cuando la partida se detiene */
+#game-stop-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+}
+#game-stop-overlay .overlay-card {
+  background: #1f2230;
+  color: #e6f9f2;
+  padding: 28px;
+  border-radius: 12px;
+  border: 1px solid #00ffaa55;
+  width: min(520px, 92%);
+  text-align: center;
+}
+#game-stop-overlay .overlay-card h3 { margin-top: 0; }
+#game-stop-overlay .overlay-card p { margin: 12px 0 18px; color:#cfeee2; }
+#game-stop-overlay .overlay-actions { display:flex; gap:12px; justify-content:center; }
+#game-stop-overlay .overlay-actions button { min-width:140px; }
+
+
+/* --- Estilos Específicos de Campaña (1 Jugador) --- */
+
+.score-display, .progress-display {
+  text-align: center;
+  font-weight: bold;
+  color: #00ffaa;
+  margin-bottom: 10px;
+}
+
+/* Contenedor y botones de opciones para el quiz de 1 jugador */
+.choices {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.choice-button {
+  background: #3a4a5a;
+  color: #e0e0e0;
+  border: none;
+  padding: 12px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  text-align: left;
+  box-shadow: 0 4px 0 #2e3a46;
+  transition: transform 0.08s ease, box-shadow 0.08s ease;
+  font-weight: 600;
+}
+
+.choice-button:hover:enabled {
+  background: #4a5a6a;
+}
+
+.choice-button:active:enabled {
+  transform: translateY(2px);
+  box-shadow: 0 2px 0 #2e3a46;
+}
+
+.choice-button.correct-answer {
+  background: #00aa66;
+  box-shadow: 0 4px 0 #007744;
+}
+
+.choice-button.incorrect-answer {
+  background: #cc3333;
+  box-shadow: 0 4px 0 #992222;
+}
+
+.scenario-text {
+  background: #2a2a3a;
+  padding: 15px;
+  border-radius: 8px;
+  border-left: 5px solid #00ffff;
+  margin-bottom: 20px;
+  font-style: italic;
+  text-align: left;
+}
+
+.choices-container button {
+  margin-bottom: 8px;
+}
+
+.outcome-display {
+  text-align: center;
+  font-size: 1.2em;
+  font-weight: bold;
+  min-height: 30px;
+  margin-top: 15px;
+  padding: 5px 0;
+}
+
+.text-green-400 {
+  color: #48E08D; /* Verde brillante para éxito */
+}
+
+.text-red-400 {
+  color: #FF6B6B; /* Rojo brillante para fallo */
+}
+
+.text-yellow-400 {
+  color: #FFD700; /* Dorado para resultados finales */
+}
+
+.navigation-controls {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.navigation-controls button {
+  width: auto;
+  min-width: 150px;
+}
+
+
+/* --- Estilos de Pantalla Dividida (Multijugador) --- */
+
+/* Contenedor para pantalla dividida (soporta los IDs antiguos y el actual) */
+#split-screen-game,
+#multiplayer-game {
+  display: flex;
+  flex-wrap: nowrap; /* Forzar lado a lado en pantallas anchas */
+  gap: 20px;
+  justify-content: space-between;
+  align-items: stretch;
+}
+
+.player-screen {
+  flex: 1 1 45%; 
+  background: #2a2a3a;
+  padding: 20px;
+  border-radius: 8px;
+  border: 1px solid #00ffff33;
+  min-width: 300px; 
+}
+
+/* Instrucciones de controles */
+.instructions {
+  color: #00ffff;
+  font-style: italic;
+  text-align: center;
+  margin-bottom: 15px;
+  font-size: 0.9em;
+  border: 1px dashed #00ffff33;
+  padding: 5px 10px;
+  border-radius: 4px;
+  line-height: 1.4;
+}
+
+.score-multi {
+  font-size: 1.1em;
+  font-weight: bold;
+  color: #00ffff;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.question-multi {
+  min-height: 80px; 
+  font-size: 1.1em;
+  margin-bottom: 15px;
+  text-align: left;
+}
+
+.choices-multi {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.choices-multi button {
+  width: 100%;
+  padding: 10px;
+  margin: 0;
+  background: #5a6a7a;
+  color: white;
+  box-shadow: 0 4px 0 #3e4c5a;
+}
+.choices-multi button:hover:enabled {
+  background: #4a5a6a;
+}
+.choices-multi button:active:enabled {
+  transform: translateY(2px);
+  box-shadow: 0 2px 0 #3e4c5a;
+}
+
+/* Nuevo: Estilo para la opción seleccionada por teclado */
+.choices-multi button.selected {
+  outline: 3px solid #ff00ff; /* Color neón magenta para el seleccionado */
+  box-shadow: 0 0 10px rgba(255, 0, 255, 0.7), 0 4px 0 #3e4c5a;
+  transform: scale(1.02); 
+  background: #6b7a8a;
+}
+
+.outcome-multi {
+  text-align: center;
+  font-weight: bold;
+  min-height: 20px;
+  margin-top: 10px;
+}
+
+.choices-multi button.correct-answer {
+  background: #00aa66; 
+  box-shadow: 0 4px 0 #007744;
+}
+
+.choices-multi button.incorrect-answer {
+  background: #cc3333; 
+  box-shadow: 0 4px 0 #992222;
+}
+
+/* Estilos del Temporizador */
+.timer-display {
+  width: 100%;
+  text-align: center;
+  font-size: 1.8em;
+  font-weight: bold;
+  color: #00ffff;
+  margin-bottom: 30px;
+  padding: 15px 0;
+  text-shadow: 0 0 5px rgba(0, 255, 255, 0.5);
+  transition: color 0.3s ease;
+  border-bottom: 2px solid #00ffaa44;
+}
+
+#multi-timer-display {
+  margin-bottom: 30px;
+  border-bottom: 2px solid #00ffaa44;
+}
+
+.timer-display.time-critical {
+  color: #ff3333; 
+  animation: pulse-red 1s infinite alternate;
+}
+
+@keyframes pulse-red {
+    from { text-shadow: 0 0 5px rgba(255, 51, 51, 0.5); }
+    to { text-shadow: 0 0 15px rgba(255, 51, 51, 1); }
+}
+
+.full-width-controls {
+    flex: 1 1 100%;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.full-width-controls button {
+    width: auto;
+    min-width: 200px;
+}
+
+/* Responsividad para móviles */
+@media (max-width: 768px) {
+  .player-screen {
+    flex: 1 1 100%; 
+  }
+}

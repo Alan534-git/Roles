@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CiberSeguridad: En Partida</title>
+  <!-- Fuente estándar de Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+  
+  <!-- Estilos Base/Globales (fondo, tipografía, contenedor principal) -->
+  <link rel="stylesheet" href="css/index.css" /> 
+  <!-- Estilos de Juego Específicos (campaña, pantalla dividida, timer) -->
+  <link rel="stylesheet" href="css/game.css" /> 
+</head>
+<body>
+  <div class="container" id="game-container">
+    
+    <!-- Sección de Juego de Campaña / Quiz de 1 Jugador -->
+    <div id="campaign-game" class="game-mode-section"> <!-- Quitamos 'hidden' inicial, lo controla JS -->
+      
+      <!-- Título de Campaña o Quiz de 1 Jugador -->
+      <h2 id="campaign-title">Modo de Juego</h2>
+      
+      <!-- Temporizador para QUIZ DE 1 JUGADOR CONTRARRELOJ (oculto por defecto) -->
+      <div id="single-timer-display" class="timer-display hidden">Tiempo: 30s</div>
+
+      <p id="progress-display" class="progress-display"></p>
+      <div id="score-display" class="score-display">Puntuación: 0</div>
+      
+      <!-- Texto del Escenario (Campaña) o Pregunta (Quiz) -->
+      <p id="scenario-text" class="scenario-text">Aquí aparecerá el texto del escenario o la pregunta.</p>
+      <p id="question-text" class="question-text"></p>
+      
+      <!-- Opciones de Respuesta -->
+      <div id="choices" class="choices">
+        <!-- Botones de opción se inyectan aquí -->
+      </div>
+      
+      <!-- Resultado/Feedback -->
+      <p id="outcome-text" class="outcome-text"></p>
+    </div>
+
+
+    <!-- Timer para modo multijugador contrarreloj (Global para el duelo) -->
+    <div id="multi-timer-display" class="timer-display hidden">Tiempo: 60s</div>
+    
+    <!-- Sección de Juego Multijugador (Pantalla Dividida) -->
+    <div id="multiplayer-game" class="hidden game-mode-section multiplayer-section">
+
+      <div class="player-screen" id="player1-screen">
+        <h2>Jugador 1</h2>
+        <div class="instructions">
+          Navegar: **W** (Arriba), **S** (Abajo). Seleccionar: **ESPACIO** (Solo si es Quiz).
+        </div>
+        <div id="p1-score" class="score-multi">Puntuación: 0</div>
+        <p id="p1-question" class="question-multi"></p>
+        <div id="p1-choices" class="choices-multi"></div>
+        <p id="p1-outcome" class="outcome-multi"></p>
+      </div>
+      
+      <div class="player-screen" id="player2-screen">
+        <h2>Jugador 2</h2>
+         <div class="instructions">
+          Navegar: **FLECHAS** (Arriba, Abajo). Seleccionar: **ENTER** (Solo si es Quiz).
+        </div>
+        <div id="p2-score" class="score-multi">Puntuación: 0</div>
+        <p id="p2-question" class="question-multi"></p>
+        <div id="p2-choices" class="choices-multi"></div>
+        <p id="p2-outcome" class="outcome-multi"></p>
+      </div>
+    </div>
+    
+  </div>
+  
+  <!-- Control de Volumen en Esquina Inferior Derecha (Duplicado aquí para tener control en la página de juego) -->
+  <!-- Esto es necesario porque game.js ahora tiene un setupGameMusic() que usa este ID. -->
+  <div id="volume-control-container">
+    <label for="volumeSliderGame">🎵 Música</label>
+    <input type="range" id="volumeSliderGame" min="0" max="1" step="0.1" value="0.5">
+    <button id="music-toggle-btn" class="control-btn" aria-pressed="false" style="margin-left:8px;">Pausar música</button>
+  </div>
+
+  <!-- Barra de controles del juego: pausar música y detener partida (también con ESC) -->
+  <div class="game-control-bar" aria-hidden="false">
+    <button id="stop-game-btn" class="control-btn stop-btn">Detener partida (ESC)</button>
+  </div>
+
+  <!-- Aviso para desbloquear audio si el navegador impide el autoplay -->
+  <div id="sound-unblock-game" style="display:none; position:fixed; bottom:20px; right:20px; background:linear-gradient(135deg, #1c1c2b 0%, #2a2a3a 100%); color:#e0e0e0; padding:16px 20px; border-radius:10px; border:2px solid #00ffaa; z-index:9998; max-width:340px; box-shadow: 0 0 20px rgba(0, 255, 170, 0.3);">
+    <div style="font-size:1em; font-weight:700; margin-bottom:10px; color:#00ffaa;">🔊 Activa el sonido</div>
+    <div style="font-size:0.9em; margin-bottom:12px;">El navegador bloqueó la música automática. Pulsa el botón para activar:</div>
+    <button id="enable-sound-btn-game" style="background:#00ffaa; color:#1c1c2b; border:none; padding:10px 14px; border-radius:6px; cursor:pointer; font-weight:bold; width:100%; font-size:0.95em;">Activar música</button>
+    <div style="font-size:0.8em; margin-top:10px; color:#a0a0a0;">O configura el navegador para permitir autoplay.</div>
+  </div>
+  
+  <!-- Inclusión del script de juego -->
+  <script src="js/audio.js"></script>
+  <script src="js/game.js"></script>
+</body>
+</html>

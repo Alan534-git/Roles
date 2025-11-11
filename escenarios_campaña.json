@@ -1,0 +1,278 @@
+{
+  "hacker": [
+    {
+      "title": "💻 Hacker 1",
+      "text": "Intentás acceder a una red corporativa. ¿Qué método usás?",
+      "choices": [
+        { "text": "Correo de phishing", "result": "Accediste al sistema. ¡Ataque exitoso!", "success": true },
+        { "text": "Fuerza bruta", "result": "Fallaste. IP bloqueada.", "success": false },
+        { "text": "Vulnerabilidad web", "result": "Acceso parcial logrado.", "success": true }
+      ]
+    },
+    {
+      "title": "💻 Hacker 2",
+      "text": "Querés acceder a una base de datos protegida. ¿Qué hacés?",
+      "choices": [
+        { "text": "Inyección SQL", "result": "Accediste a datos sensibles. ¡Ataque exitoso!", "success": true },
+        { "text": "Escaneo de puertos", "result": "Encontraste servicios abiertos, pero sin acceso directo.", "success": false },
+        { "text": "Ataque por diccionario", "result": "Demasiado lento. El sistema te bloqueó.", "success": false }
+      ]
+    },
+    {
+      "title": "💻 Hacker 3",
+      "text": "Tu objetivo es robar credenciales de redes sociales. ¿Qué método usás?",
+      "choices": [
+        { "text": "Página falsa de login", "result": "Usuarios ingresaron sus datos. Robo exitoso.", "success": true },
+        { "text": "Keylogger físico", "result": "Difícil de instalar. Riesgo alto.", "success": false },
+        { "text": "Ataque por fuerza bruta", "result": "Contraseñas demasiado seguras. No funcionó.", "success": false }
+      ]
+    },
+    {
+      "title": "💻 Hacker 4",
+      "text": "Querés infectar una red empresarial. ¿Qué hacés?",
+      "choices": [
+        { "text": "Adjunto malicioso en correo", "result": "Un empleado lo abrió. Malware instalado.", "success": true },
+        { "text": "Código oculto en sitio web", "result": "Fue detectado por el firewall.", "success": false },
+        { "text": "USB abandonado", "result": "Alguien lo conectó. Acceso logrado.", "success": true }
+      ]
+    },
+    {
+      "title": "💻 Hacker 5",
+      "text": "Querés vender datos robados. ¿Dónde lo hacés?",
+      "choices": [
+        { "text": "Dark web", "result": "Venta exitosa. Difícil de rastrear.", "success": true },
+        { "text": "Red social", "result": "Cuenta bloqueada por actividad sospechosa.", "success": false },
+        { "text": "Correo masivo", "result": "Detectado como spam. No funcionó.", "success": false }
+      ]
+    },
+    {
+      "title": "💻 Hacker 6",
+      "text": "Buscás vulnerar una app móvil. ¿Qué hacés?",
+      "choices": [
+        { "text": "Revisás el código fuente", "result": "Encontraste credenciales expuestas.", "success": true },
+        { "text": "Ataque de redirección", "result": "La app tiene protección contra eso.", "success": false },
+        { "text": "Modificás el APK", "result": "Lograste acceso a funciones ocultas.", "success": true }
+      ]
+    },
+    {
+      "title": "💻 Hacker 7",
+      "text": "Querés sabotear servidores. ¿Qué hacés?",
+      "choices": [
+        { "text": "Ataque DDoS", "result": "Sistema colapsó temporalmente.", "success": true },
+        { "text": "Borrás logs", "result": "Rastro eliminado. Difícil de rastrear.", "success": true },
+        { "text": "Modificás archivos", "result": "Detectado por sistema de integridad.", "success": false }
+      ]
+    },
+    {
+      "title": "💻 Hacker 8",
+      "text": "Querés infectar dispositivos personales. ¿Qué usás?",
+      "choices": [
+        { "text": "USB infectado", "result": "Funcionó en una oficina descuidada.", "success": true },
+        { "text": "App falsa", "result": "Fue detectada por antivirus.", "success": false },
+        { "text": "Enlace malicioso", "result": "Usuarios hicieron clic. Malware instalado.", "success": true }
+      ]
+    },
+    {
+      "title": "💻 Hacker 9",
+      "text": "Querés robar datos de una empresa. ¿Qué hacés?",
+      "choices": [
+        { "text": "Phishing dirigido", "result": "El CEO cayó en la trampa.", "success": true },
+        { "text": "Ataque físico", "result": "Demasiado riesgoso. No funcionó.", "success": false },
+        { "text": "Explorás vulnerabilidades", "result": "Encontraste una brecha en el servidor.", "success": true }
+      ]
+    },
+    {
+      "title": "💻 Hacker 10",
+      "text": "Querés evitar ser rastreado. ¿Qué hacés?",
+      "choices": [
+        { "text": "Usás VPN y Tor", "result": "Tu identidad quedó oculta.", "success": true },
+        { "text": "Usás tu red doméstica", "result": "Fuiste rastreado fácilmente.", "success": false },
+        { "text": "Usás proxy gratuito", "result": "Tu conexión fue interceptada.", "success": false }
+      ]
+    }
+  ],
+  "usuario": [
+    {
+      "title": "🧑 Usuario 1",
+      "text": "Recibís un correo bancario. ¿Qué hacés?",
+      "choices": [
+        { "text": "Hacés clic", "result": "Credenciales robadas.", "success": false },
+        { "text": "Lo reportás", "result": "¡Bien hecho! Ataque prevenido.", "success": true },
+        { "text": "Lo reenviás", "result": "Propagaste el phishing.", "success": false }
+      ]
+    },
+    {
+      "title": "🧑 Usuario 2",
+      "text": "Usás Wi-Fi público. ¿Qué hacés?",
+      "choices": [
+        { "text": "Usás VPN", "result": "Conexión segura.", "success": true },
+        { "text": "Ingresás sin protección", "result": "Sesión interceptada.", "success": false },
+        { "text": "Usás datos móviles", "result": "Buena alternativa.", "success": true }
+      ]
+    },
+    {
+      "title": "🧑 Usuario 3",
+      "text": "Te llega un mensaje con un link sospechoso. ¿Qué hacés?",
+      "choices": [
+        { "text": "Lo abrís", "result": "Instalaste malware sin saberlo.", "success": false },
+        { "text": "Lo ignorás", "result": "Evitaste un posible ataque.", "success": true },
+        { "text": "Lo reenviás", "result": "Ayudaste a propagar el ataque.", "success": false }
+      ]
+    },
+    {
+      "title": "🧑 Usuario 4",
+      "text": "Querés proteger tus fotos personales. ¿Qué hacés?",
+      "choices": [
+        { "text": "Las subís sin cifrado", "result": "Podrían ser accedidas por terceros.", "success": false },
+        { "text": "Usás almacenamiento seguro", "result": "Protección adecuada.", "success": true },
+        { "text": "Las compartís por redes", "result": "Exposición innecesaria.", "success": false }
+      ]
+    },
+    {
+      "title": "🧑 Usuario 5",
+      "text": "Descargás un archivo de una fuente desconocida. ¿Qué hacés?",
+      "choices": [
+        { "text": "Lo abrís directamente", "result": "Era un virus. Tu equipo fue infectado.", "success": false },
+        { "text": "Lo escaneás con antivirus", "result": "Detectaste una amenaza.", "success": true },
+        { "text": "Lo eliminás", "result": "Evitaste el riesgo.", "success": true }
+      ]
+    },
+    {
+      "title": "🧑 Usuario 6",
+      "text": "Usás la misma contraseña en varias cuentas. ¿Qué puede pasar?",
+      "choices": [
+        { "text": "Nada, es más fácil de recordar", "result": "Si una cuenta se filtra, todas están en riesgo.", "success": false },
+        { "text": "Usás verificación en dos pasos", "result": "Mitigás el riesgo.", "success": true },
+        { "text": "La cambiás cada semana", "result": "Mejor práctica, pero difícil de mantener.", "success": true }
+      ]
+    },
+    {
+      "title": "🧑 Usuario 7",
+      "text": "Compartís tu contraseña con un amigo. ¿Qué puede pasar?",
+      "choices": [
+        { "text": "Nada, confío en él", "result": "La compartió sin querer.", "success": false },
+        { "text": "Uso un gestor", "result": "Contraseña segura y privada.", "success": true },
+        { "text": "La escribo en papel", "result": "Alguien la encontró.", "success": false }
+      ]
+    },
+    {
+      "title": "🧑 Usuario 8",
+      "text": "Te roban el celular. ¿Qué medidas tenías?",
+      "choices": [
+        { "text": "Bloqueo biométrico", "result": "Datos protegidos.", "success": true },
+        { "text": "Sin bloqueo", "result": "Acceso total a tus apps.", "success": false },
+        { "text": "Borrado remoto", "result": "Eliminaste todo a tiempo.", "success": true }
+      ]
+    },
+    {
+      "title": "🧑 Usuario 9",
+      "text": "Querés conectarte a una red Wi-Fi abierta. ¿Qué hacés?",
+      "choices": [
+        { "text": "Usás VPN", "result": "Tu conexión está cifrada.", "success": true },
+        { "text": "Ingresás sin protección", "result": "Tu tráfico puede ser interceptado.", "success": false },
+        { "text": "Usás red móvil", "result": "Alternativa segura.", "success": true }
+      ]
+    },
+    {
+      "title": "🧑 Usuario 10",
+      "text": "Querés instalar una app nueva. ¿Qué hacés?",
+      "choices": [
+        { "text": "Verificás permisos y reseñas", "result": "Instalación segura.", "success": true },
+        { "text": "La descargás desde cualquier sitio", "result": "Podría contener malware.", "success": false },
+        { "text": "La instalás sin revisar", "result": "Riesgo alto de infección.", "success": false }
+      ]
+    }
+  ],
+  "defensor": [
+    {
+      "title": "🛡️ Defensor 1",
+      "text": "Detectás actividad sospechosa. ¿Cómo respondés?",
+      "choices": [
+        { "text": "Bloqueás tráfico y analizás logs", "result": "Ataque neutralizado.", "success": true },
+        { "text": "Ignorás la alerta", "result": "Sistema comprometido.", "success": false },
+        { "text": "Reiniciás servidores", "result": "Interrupción, pero efectiva.", "success": false }
+      ]
+    },
+    {
+      "title": "🛡️ Defensor 2",
+      "text": "Tu empresa sufre un ataque de ransomware. ¿Qué hacés?",
+      "choices": [
+        { "text": "Pagás el rescate", "result": "Recuperás los datos, pero fomentás el delito.", "success": false },
+        { "text": "Restaurás desde backups", "result": "Recuperación exitosa sin pagar.", "success": true },
+        { "text": "Ignorás el ataque", "result": "Perdiste acceso a todos los sistemas.", "success": false }
+      ]
+    },
+    {
+      "title": "🛡️ Defensor 3",
+      "text": "Querés capacitar al personal. ¿Qué hacés?",
+      "choices": [
+        { "text": "Curso de ciberseguridad", "result": "Mejoran las prácticas internas.", "success": true },
+        { "text": "No hacés nada", "result": "Aumenta el riesgo de errores humanos.", "success": false },
+        { "text": "Mandás un correo con consejos", "result": "Algunos lo leen, otros no.", "success": false }
+      ]
+    },
+    {
+      "title": "🛡️ Defensor 4",
+      "text": "Recibís un informe de vulnerabilidad. ¿Qué hacés?",
+      "choices": [
+        { "text": "Aplicás parches", "result": "Sistema actualizado y protegido.", "success": true },
+        { "text": "Lo ignorás", "result": "La brecha sigue abierta.", "success": false },
+        { "text": "Lo reenviás sin leer", "result": "No se tomó acción.", "success": false }
+      ]
+    },
+    {
+      "title": "🛡️ Defensor 5",
+      "text": "Querés monitorear la red en tiempo real. ¿Qué usás?",
+      "choices": [
+        { "text": "Sistema SIEM", "result": "Detectás amenazas rápidamente.", "success": true },
+        { "text": "Logs manuales", "result": "Lento y poco efectivo.", "success": false },
+        { "text": "No monitoreás", "result": "Ataques pasan desapercibidos.", "success": false }
+      ]
+    },
+    {
+      "title": "🛡️ Defensor 6",
+      "text": "Debés proteger datos sensibles. ¿Qué implementás?",
+      "choices": [
+        { "text": "Cifrado", "result": "Datos ilegibles para atacantes.", "success": true },
+        { "text": "Contraseñas simples", "result": "Fácilmente vulnerables.", "success": false },
+        { "text": "Acceso libre", "result": "Riesgo total.", "success": false }
+      ]
+    },
+    {
+      "title": "🛡️ Defensor 7",
+      "text": "Sos responsable de backups. ¿Qué estrategia usás?",
+      "choices": [
+        { "text": "Copia diaria en nube", "result": "Recuperación rápida.", "success": true },
+        { "text": "Solo copia mensual", "result": "Datos perdidos.", "success": false },
+        { "text": "Sin backup", "result": "Desastre total.", "success": false }
+      ]
+    },
+    {
+      "title": "🛡️ Defensor 8",
+      "text": "Querés proteger la red interna. ¿Qué implementás?",
+      "choices": [
+        { "text": "Firewall y segmentación", "result": "Red más segura y controlada.", "success": true },
+        { "text": "Acceso libre", "result": "Riesgo de intrusión.", "success": false },
+        { "text": "Contraseñas compartidas", "result": "Malas prácticas.", "success": false }
+      ]
+    },
+    {
+      "title": "🛡️ Defensor 9",
+      "text": "Un empleado pierde su laptop. ¿Qué hacés?",
+      "choices": [
+        { "text": "Activás borrado remoto", "result": "Datos eliminados a tiempo.", "success": true },
+        { "text": "No hacés nada", "result": "Datos confidenciales expuestos.", "success": false },
+        { "text": "Cambiás todas las contraseñas", "result": "Buena medida preventiva.", "success": false }
+      ]
+    },
+    {
+      "title": "🛡️ Defensor 10",
+      "text": "Querés prevenir accesos no autorizados. ¿Qué implementás?",
+      "choices": [
+        { "text": "Autenticación multifactor", "result": "Mayor seguridad para los usuarios.", "success": true },
+        { "text": "Solo contraseña", "result": "Fácil de vulnerar.", "success": false },
+        { "text": "Acceso sin credenciales", "result": "Grave error de seguridad.", "success": false }
+      ]
+    }
+  ]
+}
