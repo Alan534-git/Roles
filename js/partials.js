@@ -166,20 +166,25 @@ document.addEventListener('DOMContentLoaded', async () => {
         overlay.className = 'site-modal';
         overlay.setAttribute('role', 'dialog');
         overlay.setAttribute('aria-hidden', 'true');
-        overlay.innerHTML = `
-            <div class="modal-backdrop" data-modal="pause">
-              <div class="modal-card" role="document">
-                <h2>Partida en pausa</h2>
-                <div class="modal-body pause-main">
-                  <p>La partida está en pausa. Pulsa el mismo botón para reanudar o pulsa Reiniciar para volver a empezar.</p>
-                </div>
-                <div class="modal-body help-section" style="display:none;">
-                  <h3>Ayuda</h3>
-                  <p>Usa W/S (Jugador 1), Flechas (Jugador 2) para navegar. ESPACIO/ENTER para seleccionar. Pulsa F1 para abrir/cerrar esta pantalla de ayuda.</p>
-                </div>
-                <div class="modal-actions"><button id="resume-game" class="control-btn">Reanudar</button><button id="restart-game" class="control-btn">Reiniciar</button></div>
-              </div>
-            </div>`;
+                overlay.innerHTML = `
+                        <div class="modal-backdrop" data-modal="pause">
+                            <div class="modal-card" role="document">
+                                <h2>Partida en pausa</h2>
+                                <div class="modal-body pause-main">
+                                    <p>La partida está en pausa. Pulsa el mismo botón para reanudar, reiniciar o volver al menú principal.</p>
+                                </div>
+                                <div class="modal-body help-section" style="display:none;">
+                                    <h3>Ayuda</h3>
+                                    <p>Usa W/S (Jugador 1), Flechas (Jugador 2) para navegar. ESPACIO/ENTER para seleccionar. Pulsa F1 para abrir/cerrar esta pantalla de ayuda.</p>
+                                </div>
+                                                <div class="modal-actions">
+                                                    <button id="resume-game" class="control-btn">Reanudar</button>
+                                                    <button id="restart-game" class="control-btn">Reiniciar</button>
+                                                    <button id="help-toggle" class="control-btn">Ayuda</button>
+                                                    <button id="return-to-menu" class="control-btn">Volver al menú</button>
+                                                </div>
+                            </div>
+                        </div>`;
         document.body.appendChild(overlay);
         overlay.querySelector('#resume-game').addEventListener('click', () => togglePause(false));
         overlay.querySelector('#restart-game').addEventListener('click', () => {
@@ -187,12 +192,68 @@ document.addEventListener('DOMContentLoaded', async () => {
             window.dispatchEvent(new CustomEvent('game:restart'));
             togglePause(false);
         });
+        // Mostrar Ayuda dentro del mismo overlay
+        overlay.querySelector('#help-toggle').addEventListener('click', (e) => {
+            e.preventDefault();
+            // Show help section
+            const helpSec = overlay.querySelector('.help-section');
+            const mainSec = overlay.querySelector('.pause-main');
+            if (helpSec && helpSec.style.display === 'none') {
+                helpSec.style.display = '';
+                mainSec.style.display = 'none';
+                // focus first focusable in help (if any)
+                const first = helpSec.querySelector('button, a, [tabindex]');
+                if (first) first.focus();
+            } else {
+                helpSec.style.display = 'none';
+                mainSec.style.display = '';
+            }
+        });
+        // Volver al menú principal (con confirmación)
+        overlay.querySelector('#return-to-menu').addEventListener('click', (e) => {
+            e.preventDefault();
+            const leave = window.confirm('¿Quieres volver al menú principal? Se perderá el progreso actual de la partida.');
+            if (leave) {
+                window.location.href = 'index.html';
+            } else {
+                // Mantener overlay abierto y devolver foco a Reanudar
+                const resume = overlay.querySelector('#resume-game');
+                if (resume) resume.focus();
+            }
+        });
+
+        // Keyboard navigation inside the pause overlay: arrow keys move between action buttons
+        overlay.addEventListener('keydown', (ev) => {
+            const isOpen = overlay.getAttribute('aria-hidden') === 'false';
+            if (!isOpen) return;
+            const actionButtons = Array.from(overlay.querySelectorAll('.modal-actions .control-btn'));
+            if (!actionButtons.length) return;
+            const current = document.activeElement;
+            const idx = actionButtons.indexOf(current);
+            if (ev.key === 'ArrowRight' || ev.key === 'ArrowDown') {
+                ev.preventDefault();
+                const next = actionButtons[(idx + 1) % actionButtons.length];
+                if (next) next.focus();
+            } else if (ev.key === 'ArrowLeft' || ev.key === 'ArrowUp') {
+                ev.preventDefault();
+                const prev = actionButtons[(idx - 1 + actionButtons.length) % actionButtons.length];
+                if (prev) prev.focus();
+            } else if (ev.key === 'Home') {
+                ev.preventDefault();
+                actionButtons[0].focus();
+            } else if (ev.key === 'End') {
+                ev.preventDefault();
+                actionButtons[actionButtons.length - 1].focus();
+            }
+        });
         overlay.querySelector('.modal-backdrop').addEventListener('click', (ev) => {
             if (ev.target === overlay.querySelector('.modal-backdrop')) togglePause(false);
         });
     }
 
     // Toggle pause overlay; optional section: 'help' to show help content
+    // Also installs a document-level handler while paused to prevent arrow keys from scrolling the page.
+    let _pauseDocHandler = null;
     function togglePause(open, section) {
         ensurePauseOverlay();
         const overlay = document.getElementById('game-pause-overlay');
@@ -216,8 +277,27 @@ document.addEventListener('DOMContentLoaded', async () => {
         // dispatch custom events so game logic can respond
         if (shouldOpen) {
             window.dispatchEvent(new CustomEvent('game:pause'));
+            // Prevent arrow keys from scrolling the document while paused.
+            if (!_pauseDocHandler) {
+                _pauseDocHandler = function (ev) {
+                    const keys = ['ArrowUp','ArrowDown','ArrowLeft','ArrowRight','PageUp','PageDown','Home','End',' '];
+                    if (keys.includes(ev.key)) {
+                        // Allow if focus is on an actual input or editable element
+                        const el = document.activeElement;
+                        const editable = el && (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA' || el.isContentEditable);
+                        if (editable) return;
+                        ev.preventDefault();
+                        ev.stopPropagation();
+                    }
+                };
+                document.addEventListener('keydown', _pauseDocHandler, true);
+            }
         } else {
             window.dispatchEvent(new CustomEvent('game:resume'));
+            if (_pauseDocHandler) {
+                document.removeEventListener('keydown', _pauseDocHandler, true);
+                _pauseDocHandler = null;
+            }
         }
     }
 

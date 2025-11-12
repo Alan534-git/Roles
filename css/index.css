@@ -1,32 +1,47 @@
 /* Tema Oscuro "Cyber" (Base y Menú) */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+/* Evitar scrollbar de página manteniendo los contenedores internos scrollables si hace falta */
 body {
     font-family: 'Inter', sans-serif; /* Usamos Inter como estándar */
     background: #12121e; /* Fondo oscuro */
     color: #e0e0e0; /* Texto claro */
-    margin: 0;
-    padding: 0;
     display: flex;
     flex-direction: column; /* Apilar header, main y footer verticalmente */
     justify-content: center;
     align-items: center; /* Centrar contenido principal */
     min-height: 100vh;
-    padding: 20px;
+    padding: 0; /* moved padding into containers to avoid overflowing */
+    overflow: hidden; /* Evita scrollbar en el documento */
 }
 
 /* Contenedor principal con efecto de neón */
 .container {
-  width: 90%;
-  max-width: 500px; /* Tamaño más ajustado para menú */
-  background: #1c1c2b;
-  padding: 30px;
-  border-radius: 12px;
-  box-shadow: 0 0 20px rgba(0, 255, 255, 0.2), 0 0 5px rgba(0, 0, 0, 0.8); /* Sombra estilo neón */
-  border: 1px solid #00ffff55;
-  transition: all 0.3s ease;
+    width: 90%;
+    max-width: 500px; /* Tamaño más ajustado para menú */
+    background: #1c1c2b;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.2), 0 0 5px rgba(0, 0, 0, 0.8); /* Sombra estilo neón */
+    border: 1px solid #00ffff55;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+    /* Asegurar que el contenedor no provoque scroll de página */
+    max-height: calc(100vh - 40px);
+    overflow: auto;
 }
 
-/* Para centrar el contenedor en páginas como index (cuando body es column) */
-#main-container { margin: auto; }
+/* Centrado y ajuste de alto para evitar scrollbar del documento */
+#main-container { margin: auto; width: 100%; max-width: 680px; padding: 20px; box-sizing: border-box; }
+
+/* Ajustes aplicables tanto en index como en game para que el documento no necesite scrollbar
+    Mantendremos el body sin overflow para eliminar la barra del documento y permitiremos
+    scroll interno en el contenedor principal si el contenido necesita más espacio. */
+#game-container, .page-main { width: 100%; max-width: 1100px; box-sizing: border-box; max-height: 100vh; overflow: auto; padding: 20px; }
 
 h1, h2 {
   text-align: center;
@@ -46,7 +61,7 @@ button {
   background: #3a4a5a;
   color: #e0e0e0;
   border: none;
-  padding: 12px 20px;
+    padding: 12px 20px;
   margin: 10px 0;
   border-radius: 8px;
   cursor: pointer;

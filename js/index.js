@@ -43,6 +43,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Configurar la interfaz inicial
         updateConfigDisplay(selectedMode);
+        // While configuration menu is open, prevent arrow keys from scrolling the page
+        setConfigKeyPrevent(true);
     });
 
     // --- LÓGICA DE SELECCIÓN DE MODO ---
@@ -61,6 +63,25 @@ document.addEventListener("DOMContentLoaded", () => {
             updateConfigDisplay(newMode);
         });
     });
+
+    // Keyboard navigation for mode buttons (ArrowLeft/ArrowRight, Enter/Space to select)
+    modeButtons.forEach((btn, idx) => {
+        btn.setAttribute('tabindex', '0');
+        btn.addEventListener('keydown', (ev) => {
+            if (ev.key === 'ArrowRight' || ev.key === 'ArrowDown') {
+                ev.preventDefault();
+                const next = modeButtons[(idx + 1) % modeButtons.length];
+                next && next.focus();
+            } else if (ev.key === 'ArrowLeft' || ev.key === 'ArrowUp') {
+                ev.preventDefault();
+                const prev = modeButtons[(idx - 1 + modeButtons.length) % modeButtons.length];
+                prev && prev.focus();
+            } else if (ev.key === 'Enter' || ev.key === ' ') {
+                ev.preventDefault();
+                btn.click();
+            }
+        });
+    });
     
     // Lógica para seleccionar el rol en Campaña
     campaignRoleButtons.forEach(button => {
@@ -68,6 +89,25 @@ document.addEventListener("DOMContentLoaded", () => {
             selectedRole = event.target.dataset.role;
             campaignRoleButtons.forEach(btn => btn.classList.remove('selected'));
             event.target.classList.add('selected');
+        });
+    });
+
+    // Keyboard navigation for role buttons (ArrowLeft/ArrowRight + Enter)
+    campaignRoleButtons.forEach((btn, idx) => {
+        btn.setAttribute('tabindex', '0');
+        btn.addEventListener('keydown', (ev) => {
+            if (ev.key === 'ArrowRight' || ev.key === 'ArrowDown') {
+                ev.preventDefault();
+                const next = campaignRoleButtons[(idx + 1) % campaignRoleButtons.length];
+                next && next.focus();
+            } else if (ev.key === 'ArrowLeft' || ev.key === 'ArrowUp') {
+                ev.preventDefault();
+                const prev = campaignRoleButtons[(idx - 1 + campaignRoleButtons.length) % campaignRoleButtons.length];
+                prev && prev.focus();
+            } else if (ev.key === 'Enter' || ev.key === ' ') {
+                ev.preventDefault();
+                btn.click();
+            }
         });
     });
 
@@ -115,8 +155,31 @@ document.addEventListener("DOMContentLoaded", () => {
     // Guardar el volumen de la música para usarlo en la siguiente página
     try { sessionStorage.setItem('initialVolume', String(window.AudioManager ? AudioManager.getVolume() : 0.5)); } catch(e){}
         
+        // Remove the key-prevent handler before navigating
+        setConfigKeyPrevent(false);
         startGame(config);
     });
+
+    // Prevent arrow keys from scrolling when the config menu is shown
+    let _configKeyHandler = null;
+    function setConfigKeyPrevent(enable) {
+        if (enable && !_configKeyHandler) {
+            _configKeyHandler = function(ev) {
+                const keys = ['ArrowUp','ArrowDown','ArrowLeft','ArrowRight','PageUp','PageDown','Home','End',' '];
+                if (keys.includes(ev.key)) {
+                    const el = document.activeElement;
+                    const editable = el && (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA' || el.isContentEditable);
+                    if (editable) return;
+                    ev.preventDefault();
+                    ev.stopPropagation();
+                }
+            };
+            document.addEventListener('keydown', _configKeyHandler, true);
+        } else if (!enable && _configKeyHandler) {
+            document.removeEventListener('keydown', _configKeyHandler, true);
+            _configKeyHandler = null;
+        }
+    }
 });
 
 /**

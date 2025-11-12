@@ -180,10 +180,35 @@
 .player-screen {
   flex: 1 1 45%; 
   background: #2a2a3a;
-  padding: 20px;
+  padding: 16px;
   border-radius: 8px;
   border: 1px solid #00ffff33;
   min-width: 300px; 
+}
+
+/* Limitar la altura de cada pantalla de jugador para que no necesiten scroll interno
+   Reducimos padding y tamaños de texto en pantallas con poca altura. */
+.player-screen {
+  box-sizing: border-box;
+  max-height: calc(100vh - 160px); /* reservar espacio para header y controles */
+  overflow: hidden; /* intentamos evitar scroll interno; el contenido se ajustará por CSS */
+}
+
+.choices-multi button {
+  padding: 8px; /* reducir padding para caber más opciones */
+  font-size: 0.95rem;
+}
+
+@media (max-height: 700px) {
+  .player-screen { padding: 10px; }
+  .question-multi { min-height: 60px; font-size: 1rem; }
+  .choices-multi button { padding: 8px 10px; font-size: 0.95rem; }
+}
+
+@media (max-width: 900px) {
+  /* En móviles apilamos, y reducimos aún más el padding para evitar scroll */
+  .player-screen { padding: 10px; max-height: none; }
+  .choices-multi button { padding: 8px; font-size: 0.95rem; }
 }
 
 /* Instrucciones de controles */
