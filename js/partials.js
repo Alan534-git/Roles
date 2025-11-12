@@ -229,16 +229,23 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
     }
 
-    // Keyboard shortcuts: F1 opens pause with help; Escape closes pause if open
+    // Keyboard shortcuts: F1 opens pause with help; Escape toggles pause (close if open, open if closed)
     document.addEventListener('keydown', (ev) => {
         if (ev.key === 'F1') {
             if (!isGamePage) return; // F1 only opens help/pause inside the game
             ev.preventDefault();
             togglePause(true, 'help');
         } else if (ev.key === 'Escape') {
-            // close pause overlay if open
+            // If pause overlay is open, close it. If closed and we're on the game page, open it.
             const pause = document.getElementById('game-pause-overlay');
-            if (pause && pause.getAttribute('aria-hidden') === 'false') togglePause(false);
+            const isOpen = pause && pause.getAttribute('aria-hidden') === 'false';
+            if (isOpen) {
+                togglePause(false);
+            } else if (isGamePage) {
+                // prevent default to avoid interfering with browser behavior and other listeners
+                ev.preventDefault();
+                togglePause(true);
+            }
         }
     });
 });

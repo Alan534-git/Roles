@@ -53,6 +53,10 @@ document.addEventListener("DOMContentLoaded", () => {
     window.addEventListener('game:resume', () => {
         try { if (window.game && window.game.isPaused) resumeGame(); } catch(e){}
     });
+    // Escuchar reinicio pedido desde el overlay (partials.js)
+    window.addEventListener('game:restart', () => {
+        try { restartGame(); } catch(e) { console.error('Error al manejar game:restart', e); }
+    });
 
     // 2. Cargar datos y configuración
     loadData().then(() => {
@@ -281,7 +285,10 @@ function attachGameControls() {
     // Registrar la tecla ESC para pausar/reanudar la partida (listener separado)
     if (!escListener) {
         escListener = function (e) {
+            // If another handler already called preventDefault(), we consider the event handled
+            if (e.defaultPrevented) return;
             if (e.key === 'Escape' || e.key === 'Esc') {
+                // Mark as handled to avoid other listeners from also reacting
                 e.preventDefault(); // Evitar que ESC haga otras cosas
                 // Verificar si ya hay modal abierto usando window.game.isPaused en lugar de buscar el elemento
                 try {
@@ -351,79 +358,8 @@ function pauseGame() {
     // Congelar temporizador
     try { clearInterval(timerInterval); } catch (e) {}
 
-    // Mostrar overlay de pausa
-    const existing = document.getElementById('game-pause-overlay');
-    // HTML markup compatible con las reglas de .site-modal en css/index.css
-    const modalHTML = `
-    <div id="game-pause-overlay" class="site-modal" role="dialog" aria-hidden="false">
-      <div class="modal-backdrop" data-modal="pause">
-        <div class="modal-card" role="document">
-          <h2>Partida en pausa</h2>
-          <div class="modal-body pause-main">
-            <p>La partida está en pausa. El temporizador y la música se han detenido.</p>
-          </div>
-          <div class="modal-body help-section" style="display:none;">
-            <h3>Ayuda del juego</h3>
-            <ul>
-              <li>Jugador 1: W/S para navegar, ESPACIO para seleccionar.</li>
-              <li>Jugador 2: Flechas para navegar, ENTER para seleccionar.</li>
-              <li>Pulsa ESC para pausar o reanudar la partida.</li>
-            </ul>
-          </div>
-          <div class="modal-actions">
-            <button id="pause-resume-btn" class="control-btn">Reanudar</button>
-            <button id="pause-restart-btn" class="control-btn">Reiniciar partida</button>
-            <button id="pause-menu-btn" class="control-btn">Volver al menú</button>
-            <button id="pause-help-btn" class="control-btn">Ayuda</button>
-          </div>
-        </div>
-      </div>
-    </div>`;
-
-    if (existing) {
-        try {
-            // Si existe pero no tiene la estructura correcta, reemplazar su contenido
-            if (!existing.classList || !existing.classList.contains('site-modal')) {
-                existing.outerHTML = modalHTML;
-            } else {
-                existing.setAttribute('aria-hidden', 'false');
-                existing.style.display = '';
-            }
-        } catch (e) {
-            // En caso de error al manipular, reemplazar
-            try { existing.outerHTML = modalHTML; } catch (e2) { document.body.insertAdjacentHTML('beforeend', modalHTML); }
-        }
-    } else {
-        document.body.insertAdjacentHTML('beforeend', modalHTML);
-    }
-
-    // Attach handlers
-    document.getElementById('pause-resume-btn')?.addEventListener('click', () => resumeGame());
-    document.getElementById('pause-restart-btn')?.addEventListener('click', () => { restartGame(); resumeGame(); });
-    document.getElementById('pause-menu-btn')?.addEventListener('click', () => { window.location.href = 'index.html'; });
-    const helpBtn = document.getElementById('pause-help-btn');
-    const overlayEl = document.getElementById('game-pause-overlay');
-    const helpSec = overlayEl?.querySelector('.help-section');
-    const mainSec = overlayEl?.querySelector('.pause-main');
-    if (helpBtn) {
-        helpBtn.addEventListener('click', () => {
-            if (!helpSec || !mainSec) return;
-            const showing = helpSec.style.display !== 'none';
-            helpSec.style.display = showing ? 'none' : '';
-            mainSec.style.display = showing ? '' : 'none';
-        });
-    }
-
-    // Close when clicking backdrop outside modal-card
-    overlayEl?.querySelector('.modal-backdrop')?.addEventListener('click', (ev) => {
-        if (ev.target === overlayEl.querySelector('.modal-backdrop')) resumeGame();
-    });
-
-    // Focus the primary action for accessibility
-    const primary = document.getElementById('resume-game') || document.getElementById('pause-resume-btn');
-    try { primary && primary.focus(); } catch (e) {}
-
-    // No dispatch aquí: partials.js ya maneja el evento si necesita notificar al DOM
+        // Nota: el DOM del modal lo crea/gestiona `partials.js` (el overlay con 'Ayuda').
+        // Aquí solo nos encargamos del estado interno, música y timers.
 }
 
 /** Reanuda la partida: continua timer y música donde estaban */
@@ -433,20 +369,8 @@ function resumeGame() {
     window.game.isPaused = false;
 
     // Quitar overlay
-    const ov = document.getElementById('game-pause-overlay');
-    if (ov) {
-        // Si el overlay fue creado por partials (tiene clases de modal), ocultarlo en lugar de removerlo
-        try {
-            if (ov.classList && ov.classList.contains('site-modal')) {
-                ov.setAttribute('aria-hidden', 'true');
-                ov.style.display = 'none';
-            } else {
-                ov.remove();
-            }
-        } catch (e) { try { ov.remove(); } catch (e2) {} }
-    }
 
-    // No dispatch aquí: partials.js ya maneja el evento si necesita notificar al DOM
+    // No manipulamos el DOM del overlay aquí: partials.js lo oculta/gestiona.
 
     // Reanudar música si no está muteada
     try {
